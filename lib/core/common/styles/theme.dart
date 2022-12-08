@@ -1,0 +1,21 @@
+import 'package:flutter/material.dart';
+
+class CustomTheme {
+  var theme = ThemeData(
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
+        backgroundColor: Color.fromARGB(255, 0, 0, 0)),
+    textButtonTheme: TextButtonThemeData(
+        style: ButtonStyle(
+            foregroundColor: MaterialStateProperty.all<Color>(
+                Color.fromARGB(255, 0, 0, 0)))),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all<Color>(
+          Color.fromARGB(255, 0, 0, 0),
+        ),
+        foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+      ),
+    ),
+    appBarTheme: const AppBarTheme(backgroundColor: Colors.black),
+  );
+}

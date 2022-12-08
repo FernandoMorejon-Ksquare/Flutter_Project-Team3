@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project3_appforbooks/core/common/styles/theme.dart';
 import 'package:project3_appforbooks/features/auth/screens/login_screen.dart';
 import 'package:project3_appforbooks/home.dart';
 
@@ -14,9 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: CustomTheme().theme,
       home: const LoginScreen(),
     );
   }

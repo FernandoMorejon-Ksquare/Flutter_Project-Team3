@@ -23,6 +23,5 @@ flutter:
   uses-material-design: true
   assets:
     - core/common/assets/
-    - assets/
-    - Flutter_Project-Team3\lib\core\common\assets\Portrait.jpg  
-    - Flutter_Project-Team3/lib/core/common/assets/Portrait.jpg
+    - core/common/assets/Portrait.jpg
+   
