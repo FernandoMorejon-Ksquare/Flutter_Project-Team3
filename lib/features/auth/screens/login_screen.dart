@@ -26,10 +26,10 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 200,
               ),
-              // Image.asset(
-              //   "Flutter_Project-Team3/lib/core/common/assets/Portrait.jpg",
-              //   height: 200,
-              // ),
+              Container(),
+              Image.asset(
+                  "Flutter_Project-Team3/lib/core/common/assets/Portrait.jpg",
+                  fit: BoxFit.fitWidth),
               const Text("Email"),
               TextFormField(
                 keyboardType: TextInputType.emailAddress,
@@ -43,17 +43,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: double.infinity,
                   margin: const EdgeInsets.only(left: 64, right: 64, top: 24),
                   child: ElevatedButton(
-                      style: const ButtonStyle(),
-                      onPressed: () {},
-                      child: const Text("Log In"))),
+                      onPressed: () {}, child: const Text("Log In"))),
               Container(
                   height: 40,
                   width: double.infinity,
                   margin: const EdgeInsets.only(left: 64, right: 64, top: 16),
                   child: ElevatedButton(
-                      style: const ButtonStyle(),
-                      onPressed: () {},
-                      child: const Text("Sign Up"))),
+                      onPressed: () {}, child: const Text("Sign Up"))),
               TextButton(
                   onPressed: () {}, child: const Text("Forgot your password?"))
             ]),
