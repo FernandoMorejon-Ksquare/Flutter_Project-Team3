@@ -22,20 +22,35 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 32,
               ),
-              const Text("All Books and E-Books"),
+              const Text(
+                "All Books and E-Books",
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
               const SizedBox(
                 height: 200,
               ),
               Container(),
-              Image.asset(
-                  "Flutter_Project-Team3/lib/core/common/assets/Portrait.jpg",
-                  fit: BoxFit.fitWidth),
+              // Image.asset(
+              //     "Flutter_Project-Team3/lib/core/common/assets/Portrait.jpg",
+              //     fit: BoxFit.fitWidth),
               const Text("Email"),
+              SizedBox(
+                height: 8,
+              ),
               TextFormField(
+                decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Enter your Email Adress'),
                 keyboardType: TextInputType.emailAddress,
               ),
               const Text("Password"),
+              SizedBox(
+                height: 8,
+              ),
               TextFormField(
+                decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Enter your Password'),
                 obscureText: true,
               ),
               Container(

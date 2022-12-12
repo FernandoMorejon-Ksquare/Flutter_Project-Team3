@@ -7,11 +7,11 @@ class CustomTheme {
     textButtonTheme: TextButtonThemeData(
         style: ButtonStyle(
             foregroundColor: MaterialStateProperty.all<Color>(
-                Color.fromARGB(255, 0, 0, 0)))),
+                const Color.fromARGB(255, 0, 0, 0)))),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all<Color>(
-          Color.fromARGB(255, 0, 0, 0),
+          const Color.fromARGB(255, 0, 0, 0),
         ),
         foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
       ),
