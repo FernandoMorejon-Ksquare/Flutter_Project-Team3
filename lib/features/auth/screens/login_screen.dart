@@ -18,51 +18,78 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
+            margin: const EdgeInsets.only(right: 16, left: 16),
             child: Column(children: [
               const SizedBox(
                 height: 32,
               ),
+
+              const SizedBox(
+                height: 16,
+              ),
+
+              Image.asset("assets/Portrait.jpg", fit: BoxFit.fitWidth),
+              const SizedBox(
+                height: 16,
+              ),
+
               const Text(
-                "All Books and E-Books",
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                "Email",
+                style: TextStyle(fontSize: 16),
               ),
               const SizedBox(
-                height: 200,
-              ),
-              Container(),
-              // Image.asset(
-              //     "Flutter_Project-Team3/lib/core/common/assets/Portrait.jpg",
-              //     fit: BoxFit.fitWidth),
-              const Text("Email"),
-              SizedBox(
                 height: 8,
-              ),
-              TextFormField(
-                decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Enter your Email Adress'),
-                keyboardType: TextInputType.emailAddress,
-              ),
-              const Text("Password"),
-              SizedBox(
-                height: 8,
-              ),
-              TextFormField(
-                decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Enter your Password'),
-                obscureText: true,
               ),
               Container(
-                  height: 40,
+                margin: EdgeInsets.only(right: 32, left: 32),
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter your Email Adress'),
+                  keyboardType: TextInputType.emailAddress,
+                ),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              const Text(
+                "Password",
+                style: TextStyle(fontSize: 16),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              Container(
+                margin: EdgeInsets.only(right: 32, left: 32),
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter your Password'),
+                  obscureText: true,
+                ),
+              ),
+              Container(
+                  height: 50,
                   width: double.infinity,
-                  margin: const EdgeInsets.only(left: 64, right: 64, top: 24),
+                  margin: const EdgeInsets.only(left: 32, right: 32, top: 32),
                   child: ElevatedButton(
-                      onPressed: () {}, child: const Text("Log In"))),
+                      onPressed: () {},
+                      child: const Text(
+                        "Log In",
+                      ))),
+              // Container(
+              //     height: 50,
+              //     width: double.infinity,
+              //     margin: const EdgeInsets.only(left: 32, right: 32, top: 32),
+              //     child: ElevatedButton.icon(
+              //       onPressed: () {},
+              //       icon: Image.asset(""),
+              //       label: const Text("Log in with Facebook"),
+              //     )),
               Container(
-                  height: 40,
+                  height: 50,
                   width: double.infinity,
-                  margin: const EdgeInsets.only(left: 64, right: 64, top: 16),
+                  margin: const EdgeInsets.only(left: 32, right: 32, top: 16),
                   child: ElevatedButton(
                       onPressed: () {}, child: const Text("Sign Up"))),
               TextButton(

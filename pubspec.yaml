@@ -20,8 +20,9 @@ dev_dependencies:
     sdk: flutter
 
 flutter:
+  assets:
+    - assets/
   uses-material-design: true
   
-  assets:
-    - lib/core/common/assets/
+  
    

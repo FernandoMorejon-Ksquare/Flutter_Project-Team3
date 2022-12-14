@@ -23,7 +23,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const SizedBox(
                 height: 64,
               ),
-              const Text("First Name"),
+              const Text(
+                "First Name",
+                style: TextStyle(fontSize: 16),
+              ),
               const SizedBox(
                 height: 8,
               ),
@@ -50,7 +53,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const SizedBox(
                 height: 16,
               ),
-              const Text("Email"),
+              const Text(
+                "Email",
+                style: TextStyle(fontSize: 16),
+              ),
               const SizedBox(
                 height: 8,
               ),
@@ -64,7 +70,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               const Text(
                 "Password",
-                style: TextStyle(fontSize: 18),
+                style: TextStyle(fontSize: 16),
               ),
               const SizedBox(
                 height: 8,
@@ -78,7 +84,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const SizedBox(
                 height: 16,
               ),
-              const Text("Confirm your Password"),
+              const Text(
+                "Confirm your Password",
+                style: TextStyle(fontSize: 16),
+              ),
               const SizedBox(
                 height: 8,
               ),
@@ -99,7 +108,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       onPressed: () {},
                       child: const Text(
                         "Sign Up",
-                        style: TextStyle(fontSize: 20),
                       ))),
               TextButton(
                   onPressed: () {},

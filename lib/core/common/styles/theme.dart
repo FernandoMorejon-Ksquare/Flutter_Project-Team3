@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 class CustomTheme {
@@ -10,6 +12,8 @@ class CustomTheme {
                 const Color.fromARGB(255, 0, 0, 0)))),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
+        textStyle:
+            const MaterialStatePropertyAll<TextStyle>(TextStyle(fontSize: 20)),
         backgroundColor: MaterialStateProperty.all<Color>(
           const Color.fromARGB(255, 0, 0, 0),
         ),
