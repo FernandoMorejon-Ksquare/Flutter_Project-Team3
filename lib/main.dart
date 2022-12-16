@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Alexandria Books',
       theme: CustomTheme().theme,
-      home: const ProfileScreen(),
+      home: const BookDetailsScreen(),
     );
   }
 }
