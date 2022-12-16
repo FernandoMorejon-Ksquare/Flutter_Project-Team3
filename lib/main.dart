@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:project3_appforbooks/core/common/styles/theme.dart';
+import 'package:project3_appforbooks/features/auth/screens/favorites_screen.dart';
+import 'package:project3_appforbooks/features/auth/screens/home_screen.dart';
 import 'package:project3_appforbooks/features/auth/screens/login_screen.dart';
 import 'package:project3_appforbooks/features/auth/screens/profile_screen.dart';
 import 'package:project3_appforbooks/features/auth/screens/register_screen.dart';
 
+
 import 'features/auth/screens/book_screen.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +23,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Alexandria Books',
       theme: CustomTheme().theme,
+      home:  HomeScreen(),
       home: const BookDetailsScreen(),
+
     );
   }
 }
