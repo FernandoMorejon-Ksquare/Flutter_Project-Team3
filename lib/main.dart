@@ -3,7 +3,6 @@ import 'package:project3_appforbooks/core/common/styles/theme.dart';
 import 'package:project3_appforbooks/features/auth/screens/login_screen.dart';
 import 'package:project3_appforbooks/features/auth/screens/register_screen.dart';
 
-import 'features/book_details/book_screen.dart';
 import 'features/profile/profile_screen.dart';
 
 void main() {
