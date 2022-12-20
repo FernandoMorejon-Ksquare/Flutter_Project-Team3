@@ -7,7 +7,11 @@ import 'package:project3_appforbooks/features/auth/screens/profile_screen.dart';
 import 'package:project3_appforbooks/features/auth/screens/register_screen.dart';
 
 
+import 'features/profile/profile_screen.dart';
+
+
 import 'features/auth/screens/book_screen.dart';
+
 
 
 void main() {

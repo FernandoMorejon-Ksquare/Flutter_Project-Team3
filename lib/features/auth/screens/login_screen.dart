@@ -41,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 8,
               ),
               Container(
-                margin: EdgeInsets.only(right: 32, left: 32),
+                margin: const EdgeInsets.only(right: 32, left: 32),
                 child: TextFormField(
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(),
@@ -60,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 8,
               ),
               Container(
-                margin: EdgeInsets.only(right: 32, left: 32),
+                margin: const EdgeInsets.only(right: 32, left: 32),
                 child: TextFormField(
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(),

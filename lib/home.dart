@@ -10,6 +10,10 @@ class HomeScreen1 extends StatefulWidget {
 class _HomeScreen1State extends State<HomeScreen1> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      child: Column(
+        children: [],
+      ),
+    );
   }
 }
