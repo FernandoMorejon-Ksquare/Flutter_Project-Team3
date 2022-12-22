@@ -23,16 +23,13 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 32,
               ),
-
               const SizedBox(
                 height: 16,
               ),
-
               Image.asset("assets/Portrait.jpg", fit: BoxFit.fitWidth),
               const SizedBox(
                 height: 16,
               ),
-
               const Text(
                 "Email",
                 style: TextStyle(fontSize: 16),
@@ -77,15 +74,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: const Text(
                         "Log In",
                       ))),
-              // Container(
-              //     height: 50,
-              //     width: double.infinity,
-              //     margin: const EdgeInsets.only(left: 32, right: 32, top: 32),
-              //     child: ElevatedButton.icon(
-              //       onPressed: () {},
-              //       icon: Image.asset(""),
-              //       label: const Text("Log in with Facebook"),
-              //     )),
               Container(
                   height: 50,
                   width: double.infinity,
