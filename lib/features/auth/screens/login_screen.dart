@@ -60,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 8,
               ),
               Container(
-                margin: EdgeInsets.only(right: 32, left: 32),
+                margin: const EdgeInsets.only(right: 32, left: 32),
                 child: TextFormField(
                   controller: email_ctrl,
                   decoration: const InputDecoration(
