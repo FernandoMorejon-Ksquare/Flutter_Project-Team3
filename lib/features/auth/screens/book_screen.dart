@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 class BookDetailsScreen extends StatefulWidget {
   const BookDetailsScreen({super.key});
 
+  static const String routeName = 'books screen';
+
   @override
   State<BookDetailsScreen> createState() => _BookDetailsScreenState();
 }
