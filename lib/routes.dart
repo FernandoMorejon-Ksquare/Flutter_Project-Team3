@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:project3_appforbooks/features/books/screens/book_screen.dart';
+import 'package:project3_appforbooks/features/user/profile_screen.dart';
 
 import 'features/auth/screens/login_screen.dart';
 import 'features/auth/screens/register_screen.dart';
-import 'features/book_details/book_screen.dart';
-import 'features/profile/profile_screen.dart';
 
 Route<dynamic> onGenerateRoute(RouteSettings settings) {
   final name = settings.name;

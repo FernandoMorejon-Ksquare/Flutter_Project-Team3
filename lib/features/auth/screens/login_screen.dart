@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:project3_appforbooks/features/books/screens/book_screen.dart';
 import 'package:project3_appforbooks/features/auth/screens/register_screen.dart';
-import 'package:project3_appforbooks/features/book_details/book_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -13,14 +13,14 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController email_ctrl = TextEditingController();
-  TextEditingController password_ctrl = TextEditingController();
+  TextEditingController _emailctrl = TextEditingController();
+  TextEditingController _passwordctrl = TextEditingController();
 
 //Remember to remove prints.
   login_firebase() async {
     FirebaseAuth.instance
         .signInWithEmailAndPassword(
-            email: email_ctrl.text, password: password_ctrl.text)
+            email: _emailctrl.text, password: _passwordctrl.text)
         .then((value) {
       print("Credentials were introduced.");
       Navigator.pushReplacementNamed(context, BookDetailsScreen.routeName);
@@ -62,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Container(
                 margin: const EdgeInsets.only(right: 32, left: 32),
                 child: TextFormField(
-                  controller: email_ctrl,
+                  controller: _emailctrl,
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Enter your Email Adress'),
@@ -82,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Container(
                 margin: const EdgeInsets.only(right: 32, left: 32),
                 child: TextFormField(
-                  controller: password_ctrl,
+                  controller: _passwordctrl,
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Enter your Password'),
