@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:project3_appforbooks/features/books/screens/favorites_screen.dart';
+import 'package:project3_appforbooks/features/main/screens/home_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -67,7 +69,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   margin:
                       const EdgeInsets.only(left: 32.0, right: 32.0, top: 16.0),
                   child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(
+                            context, FavoriteScreen.routeName);
+                      },
                       child: const Text(
                         "Go to Favorites",
                         style: TextStyle(

@@ -1,6 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:project3_appforbooks/features/main/controller/book_controller.dart';
+import 'package:project3_appforbooks/features/main/models/book_model.dart';
+import 'package:project3_appforbooks/features/user/profile_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  static const String routeName = 'main';
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final titles = [
     'El psicoanalista',
     'Corazón Delator',
@@ -12,6 +24,7 @@ class HomeScreen extends StatelessWidget {
     'Corazón Delator',
     'La llamada de Cthullhu'
   ];
+
   final subtitles = [
     'libro 1',
     'libro 2',
@@ -23,40 +36,47 @@ class HomeScreen extends StatelessWidget {
     'libro 2',
     'libro 3'
   ];
-  HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    BookController controller = BookController();
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Alexandria'),
+        title: const Text(
+            'Books on Action'), // Remember to replace Action for $genreType.
         leading: IconButton(
           onPressed: () {},
           icon: const Icon(Icons.search),
         ),
         actions: [
           IconButton(
-            icon: Image.asset('lion.jpg'),
-            onPressed: () {},
+            icon: Image.network('https://picsum.photos/200'), // Replace image.
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, ProfileScreen.routeName);
+            },
             iconSize: 64,
           )
         ],
       ),
-      body: ListView.builder(
-        itemCount: titles.length,
-        itemBuilder: (context, index) {
-          return Card(
-            child: ListTile(
-              title: Text(titles[index]),
-              subtitle: Text(subtitles[index]),
-              leading: IconButton(
-                icon: Image.asset('shrek.png'),
-                onPressed: () {},
+      body: SafeArea(
+        child: ListView.builder(
+          itemCount: controller.getBooks.length,
+          itemBuilder: (context, index) {
+            BookModel item = controller.getBooks[index];
+            return Card(
+              child: ListTile(
+                title: Text(item.title ?? "Title"),
+                subtitle: Text(item.author ?? "Author"),
+                leading: IconButton(
+                  icon: Image.network(
+                      item.thumbnailUrl ?? "https://picsum.photos/200"),
+                  onPressed: () {},
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:project3_appforbooks/features/books/screens/book_screen.dart';
 import 'package:project3_appforbooks/features/auth/screens/register_screen.dart';
+import 'package:project3_appforbooks/features/main/screens/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -23,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
             email: _emailctrl.text, password: _passwordctrl.text)
         .then((value) {
       print("Credentials were introduced.");
-      Navigator.pushReplacementNamed(context, BookDetailsScreen.routeName);
+      Navigator.pushReplacementNamed(context, HomeScreen.routeName);
     }).catchError((e) {
       print("Error:");
       print(e);

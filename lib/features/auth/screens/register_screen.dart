@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project3_appforbooks/features/books/screens/book_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:project3_appforbooks/features/main/screens/home_screen.dart';
 import 'login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -26,7 +27,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             email: email_ctrl.text, password: password_ctrl.text)
         .then((value) {
       print("User created.");
-      Navigator.pushReplacementNamed(context, BookDetailsScreen.routeName);
+      Navigator.pushReplacementNamed(context, HomeScreen.routeName);
     }).catchError((e) {
       print("Error: ");
       print(e);
