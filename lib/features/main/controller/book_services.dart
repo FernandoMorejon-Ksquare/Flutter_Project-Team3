@@ -12,7 +12,6 @@ class BookServices {
       "q": "action",
       "maxResults": "40"
     }); // Search will be: q=subject:$genreType
-    print(url);
     Map<String, dynamic> modelObj = {};
     try {
       Response response = await http.get(url);

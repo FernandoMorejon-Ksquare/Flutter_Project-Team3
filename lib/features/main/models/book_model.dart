@@ -1,3 +1,4 @@
+// REMEMBER TO DELETE PRINTS AND UPDATE MODEL.
 class BookModel {
   String? title;
   String? author;

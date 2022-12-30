@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:project3_appforbooks/features/books/screens/book_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:project3_appforbooks/features/main/screens/home_screen.dart';
 import 'login_screen.dart';
@@ -14,17 +13,17 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  TextEditingController first_name_ctrl = TextEditingController();
-  TextEditingController last_name_ctrl = TextEditingController();
-  TextEditingController email_ctrl = TextEditingController();
-  TextEditingController password_ctrl = TextEditingController();
-  TextEditingController confirm_password_ctrl = TextEditingController();
+  final TextEditingController _firstNameCtrl = TextEditingController();
+  final TextEditingController _lastNameCtrl = TextEditingController();
+  final TextEditingController _emailCtrl = TextEditingController();
+  final TextEditingController _passwordCtrl = TextEditingController();
+  final TextEditingController _confirmPasswordCtrl = TextEditingController();
 
 //Remember to remove prints.
-  register_firebase() async {
+  registerFirebase() async {
     FirebaseAuth.instance
         .createUserWithEmailAndPassword(
-            email: email_ctrl.text, password: password_ctrl.text)
+            email: _emailCtrl.text, password: _passwordCtrl.text)
         .then((value) {
       print("User created.");
       Navigator.pushReplacementNamed(context, HomeScreen.routeName);
@@ -57,7 +56,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 8,
               ),
               TextFormField(
-                controller: first_name_ctrl,
+                controller: _firstNameCtrl,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Enter your First Name'),
@@ -73,7 +72,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 8,
               ),
               TextFormField(
-                controller: last_name_ctrl,
+                controller: _lastNameCtrl,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Enter your Last Name'),
@@ -89,7 +88,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 8,
               ),
               TextFormField(
-                controller: email_ctrl,
+                controller: _emailCtrl,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Enter your Email Adress'),
@@ -105,7 +104,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 8,
               ),
               TextFormField(
-                controller: password_ctrl,
+                controller: _passwordCtrl,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Enter your Password'),
@@ -122,7 +121,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 8,
               ),
               TextFormField(
-                controller: confirm_password_ctrl,
+                controller: _confirmPasswordCtrl,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Enter your Password again'),
@@ -137,7 +136,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   margin: const EdgeInsets.only(left: 32, right: 32, top: 16),
                   child: ElevatedButton(
                       onPressed: () {
-                        register_firebase();
+                        registerFirebase();
                       },
                       child: const Text(
                         "Sign Up",
