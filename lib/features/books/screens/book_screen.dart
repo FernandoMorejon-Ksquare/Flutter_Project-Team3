@@ -24,8 +24,13 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
             SizedBox(
               height: 450,
               width: double.infinity,
-              child: Expanded(
-                child: Image.asset("assets/Portrait.jpg", fit: BoxFit.cover),
+              child: Column(
+                children: [
+                  Expanded(
+                    child:
+                        Image.asset("assets/Portrait.jpg", fit: BoxFit.cover),
+                  ),
+                ],
               ),
             ),
             const SizedBox(
