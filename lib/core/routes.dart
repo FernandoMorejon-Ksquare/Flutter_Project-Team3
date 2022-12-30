@@ -22,5 +22,5 @@ Map<String, Widget Function(BuildContext)> routes = <String, WidgetBuilder>{
   HomeScreen.routeName: (ctx) => const HomeScreen(),
   BookDetailsScreen.routeName: (ctx) => const BookDetailsScreen(),
   ProfileScreen.routeName: (ctx) => const ProfileScreen(),
-  FavoriteScreen.routeName: (ctx) => const FavoriteScreen(),
+  // FavoriteScreen.routeName: (ctx) => FavoriteScreen(),
 };
