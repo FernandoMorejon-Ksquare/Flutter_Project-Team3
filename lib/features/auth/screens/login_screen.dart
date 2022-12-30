@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:project3_appforbooks/features/books/screens/book_screen.dart';
 import 'package:project3_appforbooks/features/auth/screens/register_screen.dart';
+import 'package:project3_appforbooks/features/main/screens/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -13,17 +13,17 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController _emailctrl = TextEditingController();
-  TextEditingController _passwordctrl = TextEditingController();
+  final TextEditingController _emailctrl = TextEditingController();
+  final TextEditingController _passwordctrl = TextEditingController();
 
-//Remember to remove prints.
-  login_firebase() async {
+  // ignore: non_constant_identifier_names
+  loginFirebase() async {
     FirebaseAuth.instance
         .signInWithEmailAndPassword(
             email: _emailctrl.text, password: _passwordctrl.text)
         .then((value) {
       print("Credentials were introduced.");
-      Navigator.pushReplacementNamed(context, BookDetailsScreen.routeName);
+      Navigator.pushReplacementNamed(context, HomeScreen.routeName);
     }).catchError((e) {
       print("Error:");
       print(e);
@@ -95,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   margin: const EdgeInsets.only(left: 32, right: 32, top: 32),
                   child: ElevatedButton(
                       onPressed: () {
-                        login_firebase();
+                        loginFirebase();
                       },
                       child: const Text(
                         "Log In",
