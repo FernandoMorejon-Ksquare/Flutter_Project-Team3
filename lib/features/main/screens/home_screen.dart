@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project3_appforbooks/features/main/controller/book_controller.dart';
-import 'package:project3_appforbooks/features/main/models/book_model.dart';
+import 'package:project3_appforbooks/features/main/controller/book_services.dart';
 import 'package:project3_appforbooks/features/user/profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,33 +12,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final titles = [
-    'El psicoanalista',
-    'Corazón Delator',
-    'La llamada de Cthullhu',
-    'El psicoanalista',
-    'Corazón Delator',
-    'La llamada de Cthullhu',
-    'El psicoanalista',
-    'Corazón Delator',
-    'La llamada de Cthullhu'
-  ];
-
-  final subtitles = [
-    'libro 1',
-    'libro 2',
-    'libro 3',
-    'libro 1',
-    'libro 2',
-    'libro 3',
-    'libro 1',
-    'libro 2',
-    'libro 3'
-  ];
-
   @override
   Widget build(BuildContext context) {
-    BookController controller = BookController();
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -51,7 +25,10 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         actions: [
           IconButton(
-            icon: Image.network('https://picsum.photos/200'), // Replace image.
+            icon: Image.asset(
+              'assets/lion.jpg',
+              fit: BoxFit.contain,
+            ),
             onPressed: () {
               Navigator.pushReplacementNamed(context, ProfileScreen.routeName);
             },
@@ -60,23 +37,38 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: SafeArea(
-        child: ListView.builder(
-          itemCount: controller.getBooks.length,
-          itemBuilder: (context, index) {
-            BookModel item = controller.getBooks[index];
-            return Card(
-              child: ListTile(
-                title: Text(item.title ?? "Title"),
-                subtitle: Text(item.author ?? "Author"),
-                leading: IconButton(
-                  icon: Image.network(
-                      item.thumbnailUrl ?? "https://picsum.photos/200"),
-                  onPressed: () {},
-                ),
-              ),
-            );
-          },
-        ),
+        child: FutureBuilder(
+            future: BookServices().getAllBooks(context),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                var books = snapshot.data!["items"];
+                return ListView.builder(
+                    itemCount: books.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        child: ListTile(
+                          title: Text(books[index]["volumeInfo"]["title"]),
+                          subtitle: Text(
+                              books[index]["volumeInfo"]["authors"] != null
+                                  ? books[index]["volumeInfo"]["authors"][0]
+                                  : "No authors"),
+                          leading: IconButton(
+                            icon: Image.network(books[index]["volumeInfo"]
+                                ["imageLinks"]["thumbnail"]),
+                            onPressed: () {},
+                          ),
+                        ),
+                      );
+                    });
+              }
+              if (snapshot.hasError) {
+                return const Center(child: Text("Something went wrong"));
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            }),
       ),
     );
   }
