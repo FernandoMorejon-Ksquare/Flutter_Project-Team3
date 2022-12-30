@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:form_field_validator/form_field_validator.dart';
+import 'package:project3_appforbooks/features/auth/controller/snackbar.dart';
+import 'package:project3_appforbooks/features/auth/controller/validation.dart';
 import 'package:project3_appforbooks/features/books/screens/book_screen.dart';
 import 'package:project3_appforbooks/features/auth/screens/register_screen.dart';
 
@@ -16,6 +19,19 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController _emailctrl = TextEditingController();
   TextEditingController _passwordctrl = TextEditingController();
 
+  bool _enableBtn = false;
+  final formkey = GlobalKey<FormState>();
+
+// VALIDATING FORM
+  void validateform() {
+    final form = formkey.currentState;
+    if (form!.validate()) {
+      print("Form is valid");
+    } else {
+      print("Form Invalid");
+    }
+  }
+
 //Remember to remove prints.
   login_firebase() async {
     FirebaseAuth.instance
@@ -25,6 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
       print("Credentials were introduced.");
       Navigator.pushReplacementNamed(context, BookDetailsScreen.routeName);
     }).catchError((e) {
+      LoginPassword(context);
       print("Error:");
       print(e);
     });
@@ -41,78 +58,85 @@ class _LoginScreenState extends State<LoginScreen> {
         child: SingleChildScrollView(
           child: Container(
             margin: const EdgeInsets.only(right: 16, left: 16),
-            child: Column(children: [
-              const SizedBox(
-                height: 32,
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              Image.asset("assets/Portrait.jpg", fit: BoxFit.fitWidth),
-              const SizedBox(
-                height: 16,
-              ),
-              const Text(
-                "Email",
-                style: TextStyle(fontSize: 16),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              Container(
-                margin: const EdgeInsets.only(right: 32, left: 32),
-                child: TextFormField(
-                  controller: _emailctrl,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Enter your Email Adress'),
-                  keyboardType: TextInputType.emailAddress,
+            child: Form(
+              key: formkey,
+              child: Column(children: [
+                const SizedBox(
+                  height: 32,
                 ),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              const Text(
-                "Password",
-                style: TextStyle(fontSize: 16),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              Container(
-                margin: const EdgeInsets.only(right: 32, left: 32),
-                child: TextFormField(
-                  controller: _passwordctrl,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Enter your Password'),
-                  obscureText: true,
+                const SizedBox(
+                  height: 16,
                 ),
-              ),
-              Container(
-                  height: 50,
-                  width: double.infinity,
-                  margin: const EdgeInsets.only(left: 32, right: 32, top: 32),
-                  child: ElevatedButton(
-                      onPressed: () {
-                        login_firebase();
-                      },
-                      child: const Text(
-                        "Log In",
-                      ))),
-              Container(
-                  height: 50,
-                  width: double.infinity,
-                  margin: const EdgeInsets.only(left: 32, right: 32, top: 16),
-                  child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushReplacementNamed(
-                            context, RegisterScreen.routeName);
-                      },
-                      child: const Text("Sign Up"))),
-              TextButton(
-                  onPressed: () {}, child: const Text("Forgot your password?"))
-            ]),
+                Image.asset("assets/Portrait.jpg", fit: BoxFit.fitWidth),
+                const SizedBox(
+                  height: 16,
+                ),
+                const Text(
+                  "Email",
+                  style: TextStyle(fontSize: 16),
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                Container(
+                  margin: const EdgeInsets.only(right: 32, left: 32),
+                  child: TextFormField(
+                    validator:
+                        EmailValidator(errorText: 'Enter a valid Email Adress'),
+                    controller: _emailctrl,
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Enter your Email Adress'),
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                const Text(
+                  "Password",
+                  style: TextStyle(fontSize: 16),
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                Container(
+                  margin: const EdgeInsets.only(right: 32, left: 32),
+                  child: TextFormField(
+                    validator: passwordValidator,
+                    controller: _passwordctrl,
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Enter your Password'),
+                    obscureText: true,
+                  ),
+                ),
+                Container(
+                    height: 50,
+                    width: double.infinity,
+                    margin: const EdgeInsets.only(left: 32, right: 32, top: 32),
+                    child: ElevatedButton(
+                        onPressed: () {
+                          login_firebase();
+                        },
+                        child: const Text(
+                          "Log In",
+                        ))),
+                Container(
+                    height: 50,
+                    width: double.infinity,
+                    margin: const EdgeInsets.only(left: 32, right: 32, top: 16),
+                    child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushNamed(
+                              context, RegisterScreen.routeName);
+                        },
+                        child: const Text("Sign Up"))),
+                TextButton(
+                    onPressed: () {},
+                    child: const Text("Forgot your password?"))
+              ]),
+            ),
           ),
         ),
       ),

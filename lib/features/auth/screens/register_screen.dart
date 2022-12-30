@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:form_field_validator/form_field_validator.dart';
+import 'package:project3_appforbooks/features/auth/controller/snackbar.dart';
+import 'package:project3_appforbooks/features/auth/controller/validation.dart';
 import 'package:project3_appforbooks/features/books/screens/book_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'login_screen.dart';
@@ -13,17 +16,23 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  TextEditingController first_name_ctrl = TextEditingController();
-  TextEditingController last_name_ctrl = TextEditingController();
-  TextEditingController email_ctrl = TextEditingController();
-  TextEditingController password_ctrl = TextEditingController();
-  TextEditingController confirm_password_ctrl = TextEditingController();
+  TextEditingController firstNameCtrl = TextEditingController();
+  TextEditingController lastNameCtrl = TextEditingController();
+  TextEditingController emailCtrl = TextEditingController();
+  TextEditingController passwordCtrl = TextEditingController();
+  TextEditingController confirmPasswordCtrl = TextEditingController();
+
+  bool _enableBtn = false;
+  final formkey = GlobalKey<FormState>();
+  String passMatcher = "";
+  String passMatcher2 = "";
 
 //Remember to remove prints.
   register_firebase() async {
+    
     FirebaseAuth.instance
         .createUserWithEmailAndPassword(
-            email: email_ctrl.text, password: password_ctrl.text)
+            email: emailCtrl.text, password: passwordCtrl.text)
         .then((value) {
       print("User created.");
       Navigator.pushReplacementNamed(context, BookDetailsScreen.routeName);
@@ -33,6 +42,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     });
   }
 
+  bool disableButton = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,110 +54,139 @@ class _RegisterScreenState extends State<RegisterScreen> {
         child: SingleChildScrollView(
           child: Container(
             margin: const EdgeInsets.only(left: 24, right: 24),
-            child: Column(children: [
-              const SizedBox(
-                height: 64,
-              ),
-              const Text(
-                "First Name",
-                style: TextStyle(fontSize: 16),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              TextFormField(
-                controller: first_name_ctrl,
-                decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Enter your First Name'),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              const Text(
-                "Last Name",
-                style: TextStyle(fontSize: 16),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              TextFormField(
-                controller: last_name_ctrl,
-                decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Enter your Last Name'),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              const Text(
-                "Email",
-                style: TextStyle(fontSize: 16),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              TextFormField(
-                controller: email_ctrl,
-                decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Enter your Email Adress'),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              const Text(
-                "Password",
-                style: TextStyle(fontSize: 16),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              TextFormField(
-                controller: password_ctrl,
-                decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Enter your Password'),
-                obscureText: true,
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              const Text(
-                "Confirm your Password",
-                style: TextStyle(fontSize: 16),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              TextFormField(
-                controller: confirm_password_ctrl,
-                decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Enter your Password again'),
-                obscureText: true,
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              Container(
-                  height: 50,
-                  width: double.infinity,
-                  margin: const EdgeInsets.only(left: 32, right: 32, top: 16),
-                  child: ElevatedButton(
-                      onPressed: () {
-                        register_firebase();
-                      },
-                      child: const Text(
-                        "Sign Up",
-                      ))),
-              TextButton(
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(
-                        context, LoginScreen.routeName);
+            child: Form(
+              key: formkey,
+              child: Column(children: [
+                const SizedBox(
+                  height: 64,
+                ),
+                const Text(
+                  "First Name",
+                  style: TextStyle(fontSize: 16),
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                TextFormField(
+                  validator: requiredValidator,
+                  controller: firstNameCtrl,
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter your First Name'),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                const Text(
+                  "Last Name",
+                  style: TextStyle(fontSize: 16),
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                TextFormField(
+                  validator: requiredValidator,
+                  controller: lastNameCtrl,
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter your Last Name'),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                const Text(
+                  "Email",
+                  style: TextStyle(fontSize: 16),
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                TextFormField(
+                  validator:
+                      EmailValidator(errorText: 'Enter a valid Email Adress'),
+                  controller: emailCtrl,
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter your Email Adress'),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                const Text(
+                  "Password",
+                  style: TextStyle(fontSize: 16),
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                TextFormField(
+                  onChanged: (value) {
+                    passMatcher = value;
                   },
-                  child: const Text("Already have an account?"))
-            ]),
+                  validator: passwordValidator,
+                  controller: passwordCtrl,
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter your Password'),
+                  obscureText: true,
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                const Text(
+                  "Confirm your Password",
+                  style: TextStyle(fontSize: 16),
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                TextFormField(
+                  onChanged: (value) {
+                    passMatcher2 = value;
+                    if (passMatcher != passMatcher2) {
+                      registerMatch(context);
+                    } else if (passMatcher == passMatcher2) {
+                      registerMatch2(context);
+                    } else {
+                      null;
+                    }
+                  },
+                  validator: passwordValidator,
+                  controller: confirmPasswordCtrl,
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter your Password again'),
+                  obscureText: true,
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                Container(
+                    height: 50,
+                    width: double.infinity,
+                    margin: const EdgeInsets.only(left: 32, right: 32, top: 16),
+                    child: ElevatedButton(
+                        onPressed: () {
+                          if (passMatcher == passMatcher2) {
+                            register_firebase();
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content:
+                                        Text("Your passwords don't match")));
+                          }
+                        },
+                        child: const Text(
+                          "Sign Up",
+                        ))),
+                TextButton(
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(
+                          context, LoginScreen.routeName);
+                    },
+                    child: const Text("Already have an account?"))
+              ]),
+            ),
           ),
         ),
       ),

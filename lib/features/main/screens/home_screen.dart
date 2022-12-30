@@ -35,13 +35,7 @@ class HomeScreen extends StatelessWidget {
           onPressed: () {},
           icon: const Icon(Icons.search),
         ),
-        actions: [
-          IconButton(
-            icon: Image.asset('lion.jpg'),
-            onPressed: () {},
-            iconSize: 64,
-          )
-        ],
+        actions: [],
       ),
       body: ListView.builder(
         itemCount: titles.length,
@@ -50,10 +44,6 @@ class HomeScreen extends StatelessWidget {
             child: ListTile(
               title: Text(titles[index]),
               subtitle: Text(subtitles[index]),
-              leading: IconButton(
-                icon: Image.asset('shrek.png'),
-                onPressed: () {},
-              ),
             ),
           );
         },
