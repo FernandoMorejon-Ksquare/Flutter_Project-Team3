@@ -23,6 +23,20 @@ class _HomeScreenState extends State<HomeScreen> {
           onPressed: () {},
           icon: const Icon(Icons.search),
         ),
+
+        actions: [],
+      ),
+      body: ListView.builder(
+        itemCount: titles.length,
+        itemBuilder: (context, index) {
+          return Card(
+            child: ListTile(
+              title: Text(titles[index]),
+              subtitle: Text(subtitles[index]),
+            ),
+          );
+        },
+
         actions: [
           IconButton(
             icon: Image.asset(
@@ -69,6 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               }
             }),
+
       ),
     );
   }
