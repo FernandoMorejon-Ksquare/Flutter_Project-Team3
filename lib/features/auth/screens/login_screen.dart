@@ -137,31 +137,6 @@ class LoginScreenState extends State<LoginScreen> {
                 TextButton(
                     onPressed: () {},
                     child: const Text("Forgot your password?")),
-                Container(
-                    height: 50,
-                    width: double.infinity,
-                    margin: const EdgeInsets.only(left: 32, right: 32, top: 32),
-                    child: ElevatedButton(
-                        onPressed: () {
-                          loginFirebase();
-                        },
-                        child: const Text(
-                          "Log In",
-                        ))),
-                Container(
-                    height: 50,
-                    width: double.infinity,
-                    margin: const EdgeInsets.only(left: 32, right: 32, top: 16),
-                    child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushReplacementNamed(
-                              context, RegisterScreen.routeName);
-                        },
-                        child: const Text("Sign Up"))),
-                TextButton(
-                  onPressed: () {},
-                  child: const Text("Forgot your password?"),
-                )
               ])),
         ))));
   }

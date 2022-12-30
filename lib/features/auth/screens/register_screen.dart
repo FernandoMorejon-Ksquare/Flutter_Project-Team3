@@ -107,6 +107,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 8,
               ),
               TextFormField(
+                keyboardType: TextInputType.emailAddress,
                 validator:
                     EmailValidator(errorText: 'Enter a valid Email Adress'),
                 controller: emailCtrl,
@@ -162,27 +163,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     null;
                   }
                 },
-              ),
-              Container(
-                  height: 50,
-                  width: double.infinity,
-                  margin: const EdgeInsets.only(left: 32, right: 32, top: 16),
-                  child: ElevatedButton(
-                      onPressed: () {
-                        registerFirebase();
-                      },
-                      child: const Text(
-                        "Sign Up",
-                      ))),
-              ElevatedButton(
-                child: Text("Sign Up"),
-                onPressed: () {
-                  Navigator.pushReplacementNamed(
-                      context, LoginScreen.routeName);
-                },
-              ),
-              const SizedBox(
-                height: 16,
               ),
               Container(
                   height: 50,
