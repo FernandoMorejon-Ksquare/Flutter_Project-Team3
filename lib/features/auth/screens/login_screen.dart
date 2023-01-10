@@ -19,7 +19,7 @@ class LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailctrl = TextEditingController();
   final TextEditingController _passwordctrl = TextEditingController();
 
-  bool _enableBtn = false;
+  bool enableBtn = false;
   final formkey = GlobalKey<FormState>();
 
 // VALIDATING FORM
@@ -43,7 +43,7 @@ class LoginScreenState extends State<LoginScreen> {
       print("Credentials were introduced.");
       Navigator.pushReplacementNamed(context, HomeScreen.routeName);
     }).catchError((e) {
-      LoginPassword(context);
+      loginPassword(context);
       print("Error:");
       print(e);
     });

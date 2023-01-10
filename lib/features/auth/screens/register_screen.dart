@@ -22,7 +22,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController passwordCtrl = TextEditingController();
   TextEditingController confirmPasswordCtrl = TextEditingController();
 
-  bool _enableBtn = false;
+  bool enableBtn = false;
   final formkey = GlobalKey<FormState>();
   String passMatcher = "";
   String passMatcher2 = "";
@@ -74,7 +74,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               TextFormField(
                 validator: requiredValidator,
-                controller: firstNameCtrl,
+                controller: _firstNameCtrl,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Enter your First Name'),
@@ -91,7 +91,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               TextFormField(
                 validator: requiredValidator,
-                controller: lastNameCtrl,
+                controller: _lastNameCtrl,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Enter your Last Name'),
@@ -110,7 +110,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 keyboardType: TextInputType.emailAddress,
                 validator:
                     EmailValidator(errorText: 'Enter a valid Email Adress'),
-                controller: emailCtrl,
+                controller: _emailCtrl,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Enter your Email Adress'),
@@ -130,7 +130,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   passMatcher = value;
                 },
                 validator: passwordValidator,
-                controller: passwordCtrl,
+                controller: _passwordCtrl,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Enter your Password'),
@@ -148,7 +148,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               TextFormField(
                 validator: passwordValidator,
-                controller: confirmPasswordCtrl,
+                controller: _confirmPasswordCtrl,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Enter your Password again'),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-LoginPassword(context) {
+loginPassword(context) {
   const snackbar = SnackBar(content: Text("Your password is incorrect"));
   ScaffoldMessenger.of(context).showSnackBar(snackbar);
 }
