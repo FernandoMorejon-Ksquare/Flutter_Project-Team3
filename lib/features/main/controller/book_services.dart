@@ -8,13 +8,13 @@ import 'alert_manager.dart';
 class BookServices {
   // Define String genreType = getter;
 
-  int maxResults = 11;
+  int maxResults = 20;
   int startIndex = 0;
 
   Future<Map<String, dynamic>> getAllBooks(context) async {
     Uri url = Uri.https("www.googleapis.com", "/books/v1/volumes", {
       "q": "action",
-      "maxResults": "20"
+      "maxResults": "$maxResults"
     }); // Search will be: q=subject:$genreType
     Map<String, dynamic> modelObj = {};
     try {

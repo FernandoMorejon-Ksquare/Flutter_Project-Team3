@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:project3_appforbooks/features/books/screens/book_screen.dart';
 import 'package:project3_appforbooks/features/main/controller/book_services.dart';
 import 'package:project3_appforbooks/features/user/profile_screen.dart';
-import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,24 +13,28 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final ScrollController _lazyController = ScrollController();
+  // final ScrollController _lazyController = ScrollController();
 
-  @override
-  void initState() {
-    super.initState();
+  // @override
+  // void initState() {
+  //   super.initState();
 
-    _lazyController.addListener(() {
-      if (_lazyController.position.maxScrollExtent == _lazyController.offset) {
-        BookServices().loadMore();
-      }
-    });
-  }
+  //   _lazyController.addListener(() {
+  //     if (_lazyController.position.maxScrollExtent == _lazyController.offset) {
+  //       print("JHJHJHJHJHJHJHJHJHJHJHJHJHJHJHJHJHJHJHJHJHJHJHJHJHJHJHJHJHJH");
+  //       BookServices().loadMore();
+  //       BookServices().getAllBooks(context);
+  //     }
+  //   });
+  // }
 
-  @override
-  void dispose() {
-    _lazyController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _lazyController.dispose();
+  //   super.dispose();
+  // }
+
+  int _count = 20;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +47,6 @@ class _HomeScreenState extends State<HomeScreen> {
           onPressed: () {},
           icon: const Icon(Icons.search),
         ),
-
         actions: [
           IconButton(
             icon: Image.asset(
@@ -64,21 +67,42 @@ class _HomeScreenState extends State<HomeScreen> {
               if (snapshot.hasData) {
                 var books = snapshot.data!["items"];
                 return ListView.builder(
-                    controller: _lazyController,
+                    // controller: _lazyController,
                     itemCount: books.length + 1,
                     itemBuilder: (context, index) {
                       if (index < books.length) {
-                        return Card(
-                          child: ListTile(
-                            title: Text(books[index]["volumeInfo"]["title"]),
-                            subtitle: Text(
-                                books[index]["volumeInfo"]["authors"] != null
+                        return InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              BookDetailsScreen.routeName,
+                              arguments: {
+                                "title": books[index]["volumeInfo"]["title"],
+                                "author": books[index]["volumeInfo"]
+                                            ["authors"] !=
+                                        null
                                     ? books[index]["volumeInfo"]["authors"][0]
-                                    : "No authors"),
-                            leading: IconButton(
-                              icon: Image.network(books[index]["volumeInfo"]
-                                  ["imageLinks"]["thumbnail"]),
-                              onPressed: () {},
+                                    : "No authors",
+                                "image": books[index]["volumeInfo"]
+                                    ["imageLinks"]["thumbnail"],
+                                "description": books[index]["searchInfo"]
+                                        ["textSnippet"] ??
+                                    "No description",
+                              },
+                            );
+                          },
+                          child: Card(
+                            child: ListTile(
+                              title: Text(books[index]["volumeInfo"]["title"]),
+                              subtitle: Text(
+                                  books[index]["volumeInfo"]["authors"] != null
+                                      ? books[index]["volumeInfo"]["authors"][0]
+                                      : "No authors"),
+                              leading: IconButton(
+                                icon: Image.network(books[index]["volumeInfo"]
+                                    ["imageLinks"]["thumbnail"]),
+                                onPressed: () {},
+                              ),
                             ),
                           ),
                         );

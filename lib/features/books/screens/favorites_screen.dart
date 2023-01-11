@@ -30,10 +30,13 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                 title: Text(titles[index]),
                 subtitle: Text(subtitles[index]),
                 leading: IconButton(
-                  icon: Image.asset('shrek.png'),
+                  icon: Image.asset('assets/lion.jpg'),
                   onPressed: () {},
                 ),
-                trailing: const Icon(Icons.star)),
+                trailing: const Icon(
+                  Icons.favorite,
+                  color: Colors.red,
+                )),
           );
         },
       ),
