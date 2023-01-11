@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project3_appforbooks/core/common/styles/theme.dart';
-import 'package:project3_appforbooks/features/auth/controller/provider.dart';
+import 'package:project3_appforbooks/core/master_provider.dart';
+import 'package:project3_appforbooks/features/auth/controller/auth_provider.dart';
 import 'package:project3_appforbooks/features/auth/screens/login_screen.dart';
 import 'package:project3_appforbooks/routes.dart';
 import 'package:provider/provider.dart';
@@ -13,9 +14,13 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  // runApp(const MyApp());
   runApp(MultiProvider(
-    providers: [ChangeNotifierProvider(create: (_) => HttpProvider())],
+    providers: [
+      // ChangeNotifierProvider(create: (_) => ThemeProvider()),
+      // ChangeNotifierProvider(create: (_) => AuthServiceProvider()),
+      ChangeNotifierProvider(create: (_) => SnackbarServiceProvider())
+    ],
+    child: const MyApp(),
   ));
 }
 
