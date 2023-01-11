@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project3_appforbooks/features/main/controller/book_services.dart';
 import 'package:project3_appforbooks/features/user/profile_screen.dart';
+import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,6 +13,25 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final ScrollController _lazyController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    _lazyController.addListener(() {
+      if (_lazyController.position.maxScrollExtent == _lazyController.offset) {
+        BookServices().loadMore();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _lazyController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,22 +64,33 @@ class _HomeScreenState extends State<HomeScreen> {
               if (snapshot.hasData) {
                 var books = snapshot.data!["items"];
                 return ListView.builder(
-                    itemCount: books.length,
+                    controller: _lazyController,
+                    itemCount: books.length + 1,
                     itemBuilder: (context, index) {
-                      return Card(
-                        child: ListTile(
-                          title: Text(books[index]["volumeInfo"]["title"]),
-                          subtitle: Text(
-                              books[index]["volumeInfo"]["authors"] != null
-                                  ? books[index]["volumeInfo"]["authors"][0]
-                                  : "No authors"),
-                          leading: IconButton(
-                            icon: Image.network(books[index]["volumeInfo"]
-                                ["imageLinks"]["thumbnail"]),
-                            onPressed: () {},
+                      if (index < books.length) {
+                        return Card(
+                          child: ListTile(
+                            title: Text(books[index]["volumeInfo"]["title"]),
+                            subtitle: Text(
+                                books[index]["volumeInfo"]["authors"] != null
+                                    ? books[index]["volumeInfo"]["authors"][0]
+                                    : "No authors"),
+                            leading: IconButton(
+                              icon: Image.network(books[index]["volumeInfo"]
+                                  ["imageLinks"]["thumbnail"]),
+                              onPressed: () {},
+                            ),
                           ),
-                        ),
-                      );
+                        );
+                      } else {
+                        return const Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        );
+                      }
+                      ;
                     });
               }
               if (snapshot.hasError) {
