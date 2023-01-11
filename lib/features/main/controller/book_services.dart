@@ -10,7 +10,7 @@ class BookServices {
   Future<Map<String, dynamic>> getAllBooks(context) async {
     Uri url = Uri.https("www.googleapis.com", "/books/v1/volumes", {
       "q": "action",
-      "maxResults": "40"
+      "maxResults": "20"
     }); // Search will be: q=subject:$genreType
     Map<String, dynamic> modelObj = {};
     try {

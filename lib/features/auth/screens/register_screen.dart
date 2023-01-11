@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:project3_appforbooks/features/auth/controller/snackbar.dart';
+import 'package:project3_appforbooks/features/auth/controller/auth_provider.dart';
 import 'package:project3_appforbooks/features/auth/controller/validation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:project3_appforbooks/features/main/screens/home_screen.dart';
+import 'package:provider/provider.dart';
 import 'login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -24,14 +25,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   bool enableBtn = false;
   final formkey = GlobalKey<FormState>();
-  String passMatcher = "";
-  String passMatcher2 = "";
 
   final TextEditingController _firstNameCtrl = TextEditingController();
   final TextEditingController _lastNameCtrl = TextEditingController();
   final TextEditingController _emailCtrl = TextEditingController();
   final TextEditingController _passwordCtrl = TextEditingController();
   final TextEditingController _confirmPasswordCtrl = TextEditingController();
+
+  var passMatcher;
+  var passMatcher2;
 
 //Remember to remove prints.
   registerFirebase() async {
@@ -50,6 +52,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool disableButton = false;
   @override
   Widget build(BuildContext context) {
+    final snackbarServiceProvider =
+        Provider.of<SnackbarServiceProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -156,9 +161,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 onChanged: (value) {
                   passMatcher2 = value;
                   if (passMatcher != passMatcher2) {
-                    registerMatch(context);
+                    snackbarServiceProvider.registerMatch(context);
                   } else if (passMatcher == passMatcher2) {
-                    registerMatch2(context);
+                    snackbarServiceProvider.registerMatch2(context);
                   } else {
                     null;
                   }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:project3_appforbooks/features/auth/controller/snackbar.dart';
 import 'package:project3_appforbooks/features/auth/controller/validation.dart';
 import 'package:project3_appforbooks/features/auth/screens/register_screen.dart';
 import 'package:project3_appforbooks/features/main/screens/home_screen.dart';
@@ -43,7 +42,8 @@ class LoginScreenState extends State<LoginScreen> {
       print("Credentials were introduced.");
       Navigator.pushReplacementNamed(context, HomeScreen.routeName);
     }).catchError((e) {
-      loginPassword(context);
+      const snackbar = SnackBar(content: Text("Your password is incorrect"));
+      ScaffoldMessenger.of(context).showSnackBar(snackbar);
       print("Error:");
       print(e);
     });
