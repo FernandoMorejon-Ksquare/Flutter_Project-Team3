@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:form_field_validator/form_field_validator.dart';
+import 'package:project3_appforbooks/features/auth/controller/snackbar.dart';
+import 'package:project3_appforbooks/features/auth/controller/validation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:project3_appforbooks/features/main/screens/home_screen.dart';
 import 'login_screen.dart';
@@ -13,6 +16,17 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  TextEditingController firstNameCtrl = TextEditingController();
+  TextEditingController lastNameCtrl = TextEditingController();
+  TextEditingController emailCtrl = TextEditingController();
+  TextEditingController passwordCtrl = TextEditingController();
+  TextEditingController confirmPasswordCtrl = TextEditingController();
+
+  bool enableBtn = false;
+  final formkey = GlobalKey<FormState>();
+  String passMatcher = "";
+  String passMatcher2 = "";
+
   final TextEditingController _firstNameCtrl = TextEditingController();
   final TextEditingController _lastNameCtrl = TextEditingController();
   final TextEditingController _emailCtrl = TextEditingController();
@@ -33,6 +47,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     });
   }
 
+  bool disableButton = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,9 +56,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
         title: const Text("Alexandria"),
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            margin: const EdgeInsets.only(left: 24, right: 24),
+          child: SingleChildScrollView(
+        child: Container(
+          margin: const EdgeInsets.only(left: 24, right: 24),
+          child: Form(
+            key: formkey,
             child: Column(children: [
               const SizedBox(
                 height: 64,
@@ -56,6 +73,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 8,
               ),
               TextFormField(
+                validator: requiredValidator,
                 controller: _firstNameCtrl,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
@@ -72,6 +90,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 8,
               ),
               TextFormField(
+                validator: requiredValidator,
                 controller: _lastNameCtrl,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
@@ -88,6 +107,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 8,
               ),
               TextFormField(
+                keyboardType: TextInputType.emailAddress,
+                validator:
+                    EmailValidator(errorText: 'Enter a valid Email Adress'),
                 controller: _emailCtrl,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
@@ -104,6 +126,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 8,
               ),
               TextFormField(
+                onChanged: (value) {
+                  passMatcher = value;
+                },
+                validator: passwordValidator,
                 controller: _passwordCtrl,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
@@ -121,14 +147,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 8,
               ),
               TextFormField(
+                validator: passwordValidator,
                 controller: _confirmPasswordCtrl,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Enter your Password again'),
                 obscureText: true,
-              ),
-              const SizedBox(
-                height: 16,
+                onChanged: (value) {
+                  passMatcher2 = value;
+                  if (passMatcher != passMatcher2) {
+                    registerMatch(context);
+                  } else if (passMatcher == passMatcher2) {
+                    registerMatch2(context);
+                  } else {
+                    null;
+                  }
+                },
               ),
               Container(
                   height: 50,
@@ -136,7 +170,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   margin: const EdgeInsets.only(left: 32, right: 32, top: 16),
                   child: ElevatedButton(
                       onPressed: () {
-                        registerFirebase();
+                        if (passMatcher == passMatcher2) {
+                          registerFirebase();
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text("Your passwords don't match")));
+                        }
                       },
                       child: const Text(
                         "Sign Up",
@@ -150,7 +190,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ]),
           ),
         ),
-      ),
+      )),
     );
   }
 }

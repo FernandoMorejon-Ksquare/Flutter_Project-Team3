@@ -43,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
           onPressed: () {},
           icon: const Icon(Icons.search),
         ),
+
         actions: [
           IconButton(
             icon: Image.asset(
