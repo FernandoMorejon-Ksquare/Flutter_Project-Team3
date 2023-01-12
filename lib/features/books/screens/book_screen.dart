@@ -31,7 +31,13 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
               child: Column(
                 children: [
                   Expanded(
-                    child: Image.network(args["image"], fit: BoxFit.cover),
+                    child: args["image"] != "assets/no-image-icon-23494.png"
+                        ? Image.network(
+                            args["image"],
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset("assets/no-image-icon-23494.png",
+                            fit: BoxFit.cover),
                   ),
                 ],
               ),
@@ -62,7 +68,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 12.0),
               child: Text(
-                args["description"],
+                args["description"] ?? "No description",
                 style: const TextStyle(fontSize: 16.0),
               ),
             ),

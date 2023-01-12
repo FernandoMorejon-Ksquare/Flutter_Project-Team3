@@ -33,9 +33,16 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                   icon: Image.asset('assets/lion.jpg'),
                   onPressed: () {},
                 ),
-                trailing: const Icon(
-                  Icons.favorite,
-                  color: Colors.red,
+                trailing: InkWell(
+                  onTap: () {
+                    setState(() {
+                      titles.removeAt(index);
+                    });
+                  },
+                  child: const Icon(
+                    Icons.favorite,
+                    color: Colors.red,
+                  ),
                 )),
           );
         },

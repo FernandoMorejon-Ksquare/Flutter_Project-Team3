@@ -25,8 +25,12 @@ class HomeModel {
                                   books[index]["volumeInfo"]["authors"] != null
                                       ? books[index]["volumeInfo"]["authors"][0]
                                       : "No authors",
-                              "image": books[index]["volumeInfo"]["imageLinks"]
-                                  ["thumbnail"],
+                              "image": books[index]["volumeInfo"]
+                                          ["imageLinks"] !=
+                                      null
+                                  ? books[index]["volumeInfo"]["imageLinks"]
+                                      ["thumbnail"]
+                                  : "assets/no-image-icon-23494.png",
                               "description": books[index]["searchInfo"]
                                       ["textSnippet"] ??
                                   "No description",
@@ -41,8 +45,12 @@ class HomeModel {
                                     ? books[index]["volumeInfo"]["authors"][0]
                                     : "No authors"),
                             leading: IconButton(
-                              icon: Image.network(books[index]["volumeInfo"]
-                                  ["imageLinks"]["thumbnail"]),
+                              icon: books[index]["volumeInfo"]["imageLinks"] !=
+                                      null
+                                  ? Image.network(books[index]["volumeInfo"]
+                                      ["imageLinks"]["thumbnail"])
+                                  : Image.asset(
+                                      "assets/no-image-icon-23494.png"),
                               onPressed: () {},
                             ),
                           ),
