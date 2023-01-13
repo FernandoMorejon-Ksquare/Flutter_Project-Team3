@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:project3_appforbooks/core/common/styles/theme.dart';
-import 'package:project3_appforbooks/core/master_provider.dart';
 import 'package:project3_appforbooks/features/auth/controller/auth_provider.dart';
 import 'package:project3_appforbooks/features/auth/screens/login_screen.dart';
 import 'package:project3_appforbooks/features/main/screens/home_screen.dart';
@@ -30,12 +29,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Alexandria Books',
-      theme: CustomTheme().theme,
+      //theme: CustomTheme().theme,
       onGenerateRoute: onGenerateRoute,
-      home: const HomeScreen(),
+
+      home: LoginScreen(),
+
     );
   }
 }

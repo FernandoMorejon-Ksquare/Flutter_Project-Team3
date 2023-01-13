@@ -32,6 +32,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _passwordCtrl = TextEditingController();
   final TextEditingController _confirmPasswordCtrl = TextEditingController();
 
+  bool submit = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _firstNameCtrl.addListener(() {
+      setState(() {
+        submit = _firstNameCtrl.text.isNotEmpty;
+      });
+    });
+  }
+
   var passMatcher;
   var passMatcher2;
 
@@ -174,15 +187,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   width: double.infinity,
                   margin: const EdgeInsets.only(left: 32, right: 32, top: 16),
                   child: ElevatedButton(
-                      onPressed: () {
-                        if (passMatcher == passMatcher2) {
-                          registerFirebase();
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content: Text("Your passwords don't match")));
-                        }
-                      },
+                      onPressed: submit
+                          ? () {
+                              if (passMatcher == passMatcher2) {
+                                registerFirebase();
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text(
+                                            "Your passwords don't match")));
+                              }
+                            }
+                          : null,
                       child: const Text(
                         "Sign Up",
                       ))),
