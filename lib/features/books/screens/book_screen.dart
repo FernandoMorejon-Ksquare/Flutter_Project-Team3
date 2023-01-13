@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project3_appforbooks/features/books/screens/favorites_screen.dart';
 
 class BookDetailsScreen extends StatefulWidget {
   const BookDetailsScreen({super.key});
@@ -12,6 +13,9 @@ class BookDetailsScreen extends StatefulWidget {
 class _BookDetailsScreenState extends State<BookDetailsScreen> {
   @override
   Widget build(BuildContext context) {
+    final args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Book Details Screen"),
@@ -27,8 +31,13 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
               child: Column(
                 children: [
                   Expanded(
-                    child:
-                        Image.asset("assets/Portrait.jpg", fit: BoxFit.cover),
+                    child: args["image"] != "assets/no-image-icon-23494.png"
+                        ? Image.network(
+                            args["image"],
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset("assets/no-image-icon-23494.png",
+                            fit: BoxFit.cover),
                   ),
                 ],
               ),
@@ -36,31 +45,31 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
             const SizedBox(
               height: 12.0,
             ),
-            const Padding(
-              padding: EdgeInsets.only(left: 12.0),
+            Padding(
+              padding: const EdgeInsets.only(left: 12.0),
               child: Text(
-                "Book Title",
-                style: TextStyle(fontSize: 24.0),
+                args["title"],
+                style: const TextStyle(fontSize: 24.0),
               ),
             ),
             const SizedBox(
               height: 8,
             ),
-            const Padding(
-              padding: EdgeInsets.only(left: 12.0),
+            Padding(
+              padding: const EdgeInsets.only(left: 12.0),
               child: Text(
-                "Author Name",
-                style: TextStyle(fontSize: 24.0),
+                args["author"],
+                style: const TextStyle(fontSize: 24.0),
               ),
             ),
             const SizedBox(
               height: 8,
             ),
-            const Padding(
-              padding: EdgeInsets.only(left: 12.0),
+            Padding(
+              padding: const EdgeInsets.only(left: 12.0),
               child: Text(
-                "Description",
-                style: TextStyle(fontSize: 24.0),
+                args["description"] ?? "No description",
+                style: const TextStyle(fontSize: 16.0),
               ),
             ),
             const SizedBox(
@@ -72,7 +81,9 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                 margin:
                     const EdgeInsets.only(left: 32.0, right: 32.0, top: 32.0),
                 child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, FavoriteScreen.routeName);
+                    },
                     child: const Text(
                       "Add to Favorites",
                     ))),

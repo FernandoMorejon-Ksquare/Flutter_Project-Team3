@@ -6,16 +6,12 @@ import 'dart:convert';
 import 'alert_manager.dart';
 
 class BookServices {
-  // Define String genreType = getter;
-
-  int maxResults = 11;
+  int maxResults = 20;
   int startIndex = 0;
 
-  Future<Map<String, dynamic>> getAllBooks(context) async {
-    Uri url = Uri.https("www.googleapis.com", "/books/v1/volumes", {
-      "q": "action",
-      "maxResults": "20"
-    }); // Search will be: q=subject:$genreType
+  Future<Map<String, dynamic>> getAllBooks(context, search) async {
+    Uri url = Uri.https("www.googleapis.com", "/books/v1/volumes",
+        {"q": search, "maxResults": "$maxResults"});
     Map<String, dynamic> modelObj = {};
     try {
       Response response = await http.get(url);
