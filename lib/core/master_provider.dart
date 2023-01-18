@@ -36,13 +36,8 @@ class FireBaseProvider extends ChangeNotifier {
         .createUserWithEmailAndPassword(
             email: emailCtrl.text, password: passwordCtrl.text)
         .then((value) {
-      print("User created.");
-
       Navigator.pushReplacementNamed(context, HomeScreen.routeName);
-    }).catchError((e) {
-      print("Error: ");
-      print(e);
-    });
+    }).catchError((e) {});
   }
 }
 

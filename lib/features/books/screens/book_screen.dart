@@ -16,6 +16,8 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
     final args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
 
+    String buttonText = "Add to favorites";
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Book Details Screen"),
@@ -81,11 +83,23 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                 margin:
                     const EdgeInsets.only(left: 32.0, right: 32.0, top: 32.0),
                 child: ElevatedButton(
+                    style: ButtonStyle(overlayColor:
+                        MaterialStateProperty.resolveWith<Color>(
+                            (Set<MaterialState> states) {
+                      if (states.contains(MaterialState.pressed)) {
+                        return Colors.grey;
+                      } else {
+                        return Colors.black;
+                      }
+                    })),
                     onPressed: () {
-                      Navigator.pushNamed(context, FavoriteScreen.routeName);
+                      // setState(() {
+                      //   buttonText = "Remove from favorites";
+                      // });
                     },
-                    child: const Text(
-                      "Add to Favorites",
+                    child: Text(
+                      buttonText,
+                      style: const TextStyle(fontSize: 24.0),
                     ))),
           ]),
         ),

@@ -3,7 +3,7 @@ import '../../books/screens/book_screen.dart';
 import '../controller/book_services.dart';
 
 class HomeModel {
-  homeModel(context, String search) {
+  homeModel(context, String search, ScrollController controller) {
     return SafeArea(
       child: FutureBuilder(
           future: BookServices().getAllBooks(context, search),
@@ -11,44 +11,39 @@ class HomeModel {
             if (snapshot.hasData) {
               var books = snapshot.data!["items"];
               return ListView.builder(
+                  controller: controller,
                   itemCount: books.length + 1,
                   itemBuilder: (context, index) {
                     if (index < books.length) {
+                      final book = books[index]["volumeInfo"];
                       return InkWell(
                         onTap: () {
                           Navigator.pushNamed(
                             context,
                             BookDetailsScreen.routeName,
                             arguments: {
-                              "title": books[index]["volumeInfo"]["title"],
-                              "author":
-                                  books[index]["volumeInfo"]["authors"] != null
-                                      ? books[index]["volumeInfo"]["authors"][0]
-                                      : "No authors",
-                              "image": books[index]["volumeInfo"]
-                                          ["imageLinks"] !=
-                                      null
-                                  ? books[index]["volumeInfo"]["imageLinks"]
-                                      ["thumbnail"]
+                              "title": book["title"],
+                              "author": book["authors"] != null
+                                  ? book["authors"][0]
+                                  : "No authors",
+                              "image": book["imageLinks"] != null
+                                  ? book["imageLinks"]["thumbnail"]
                                   : "assets/no-image-icon-23494.png",
-                              "description": books[index]["volumeInfo"]
-                                      ["description"] ??
-                                  "No description",
+                              "description":
+                                  book["description"] ?? "No description",
                             },
                           );
                         },
                         child: Card(
                           child: ListTile(
-                            title: Text(books[index]["volumeInfo"]["title"]),
-                            subtitle: Text(
-                                books[index]["volumeInfo"]["authors"] != null
-                                    ? books[index]["volumeInfo"]["authors"][0]
-                                    : "No authors"),
+                            title: Text(book["title"]),
+                            subtitle: Text(book["authors"] != null
+                                ? book["authors"][0]
+                                : "No authors"),
                             leading: IconButton(
-                              icon: books[index]["volumeInfo"]["imageLinks"] !=
-                                      null
-                                  ? Image.network(books[index]["volumeInfo"]
-                                      ["imageLinks"]["thumbnail"])
+                              icon: book["imageLinks"] != null
+                                  ? Image.network(
+                                      book["imageLinks"]["thumbnail"])
                                   : Image.asset(
                                       "assets/no-image-icon-23494.png"),
                               onPressed: () {},
@@ -77,4 +72,9 @@ class HomeModel {
           }),
     );
   }
+
+  // loadMore(context, search) {
+  //   BookServices().loadMore(context, search);
+  //   BookServices().getAllBooks(context, search);
+  // }
 }
