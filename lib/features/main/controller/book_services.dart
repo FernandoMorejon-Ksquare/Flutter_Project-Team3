@@ -11,11 +11,10 @@ class BookServices {
 
   Future<Map<String, dynamic>> getAllBooks(context, search) async {
     Uri url = Uri.https("www.googleapis.com", "/books/v1/volumes",
-        {"q": search, "maxResults": "$maxResults"});
+        {"q": search != "" ? search : "action", "maxResults": "$maxResults"});
     Map<String, dynamic> modelObj = {};
     try {
       Response response = await http.get(url);
-      print(url);
       modelObj = jsonDecode(response.body);
       if (response.statusCode == 200) {
         AlertManager().displaySnackBar(context, "Books successfully loaded");
