@@ -15,6 +15,7 @@ class BookServices {
     Map<String, dynamic> modelObj = {};
     try {
       Response response = await http.get(url);
+      print(url);
       modelObj = jsonDecode(response.body);
       if (response.statusCode == 200) {
         AlertManager().displaySnackBar(context, "Books successfully loaded");

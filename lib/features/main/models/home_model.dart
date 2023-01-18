@@ -31,8 +31,8 @@ class HomeModel {
                                   ? books[index]["volumeInfo"]["imageLinks"]
                                       ["thumbnail"]
                                   : "assets/no-image-icon-23494.png",
-                              "description": books[index]["searchInfo"]
-                                      ["textSnippet"] ??
+                              "description": books[index]["volumeInfo"]
+                                      ["description"] ??
                                   "No description",
                             },
                           );
