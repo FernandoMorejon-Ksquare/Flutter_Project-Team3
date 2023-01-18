@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:project3_appforbooks/core/master_provider.dart';
 import 'package:project3_appforbooks/features/auth/controller/auth_provider.dart';
 import 'package:project3_appforbooks/features/auth/screens/login_screen.dart';
+import 'package:project3_appforbooks/features/main/controller/book_services.dart';
 import 'package:project3_appforbooks/features/main/screens/home_screen.dart';
 import 'package:project3_appforbooks/features/user/profile_screen.dart';
 import 'package:project3_appforbooks/routes.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'features/main/models/book_provider.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -18,7 +21,8 @@ void main() async {
     providers: [
       // ChangeNotifierProvider(create: (_) => ThemeProvider()),
       // ChangeNotifierProvider(create: (_) => AuthServiceProvider()),
-      ChangeNotifierProvider(create: (_) => SnackbarServiceProvider())
+      ChangeNotifierProvider(create: (_) => SnackbarServiceProvider()),
+      ChangeNotifierProvider(create: (_) => BookProvider(BookServices())),
     ],
     child: const MyApp(),
   ));

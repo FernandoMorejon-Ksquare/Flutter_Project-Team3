@@ -15,13 +15,11 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   String _email = "";
   String _firstName = "";
-  String _lastName = "";
 
   @override
   Widget build(BuildContext context) {
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user != null) {
-        print(user.displayName);
         setState(() {
           _email = user.email.toString();
           _firstName = user.displayName.toString();
