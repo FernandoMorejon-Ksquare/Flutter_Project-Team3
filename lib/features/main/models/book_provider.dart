@@ -16,8 +16,6 @@ class BookProvider extends ChangeNotifier {
     final response = await service.getAllBooks(search, index);
     Iterable l = json.decode(response.body)["items"];
     List<Book> _books = List<Book>.from(l.map((model) => Book.fromJson(model)));
-    // final _books =
-    //     json.decode(response.body).map((data) => Book.fromJson(data)).toList();
     if (books.isEmpty) {
       books = _books;
     } else {

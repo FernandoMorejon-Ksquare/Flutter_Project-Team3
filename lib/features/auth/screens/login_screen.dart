@@ -39,13 +39,10 @@ class LoginScreenState extends State<LoginScreen> {
         .signInWithEmailAndPassword(
             email: _emailctrl.text, password: _passwordctrl.text)
         .then((value) {
-      print("Credentials were introduced.");
       Navigator.pushReplacementNamed(context, HomeScreen.routeName);
     }).catchError((e) {
       const snackbar = SnackBar(content: Text("Your password is incorrect"));
       ScaffoldMessenger.of(context).showSnackBar(snackbar);
-      print("Error:");
-      print(e);
     });
   }
 
