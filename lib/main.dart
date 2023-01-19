@@ -17,7 +17,7 @@ void main() async {
   runApp(MultiProvider(
     providers: [
       // ChangeNotifierProvider(create: (_) => ThemeProvider()),
-      // ChangeNotifierProvider(create: (_) => AuthServiceProvider()),
+      ChangeNotifierProvider(create: (_) => AuthServiceProvider()),
       ChangeNotifierProvider(create: (_) => SnackbarServiceProvider())
     ],
     child: const MyApp(),
@@ -32,10 +32,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Alexandria Books',
-      //theme: CustomTheme().theme,
+      theme: CustomTheme().theme,
       onGenerateRoute: onGenerateRoute,
       home: const LoginScreen(),
-
     );
   }
 }

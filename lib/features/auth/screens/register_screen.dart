@@ -17,12 +17,6 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  TextEditingController firstNameCtrl = TextEditingController();
-  TextEditingController lastNameCtrl = TextEditingController();
-  TextEditingController emailCtrl = TextEditingController();
-  TextEditingController passwordCtrl = TextEditingController();
-  TextEditingController confirmPasswordCtrl = TextEditingController();
-
   bool enableBtn = false;
   final formkey = GlobalKey<FormState>();
 
@@ -33,10 +27,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _confirmPasswordCtrl = TextEditingController();
 
   bool submit = false;
+  bool submitButton = false;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _firstNameCtrl.addListener(() {
       setState(() {
@@ -67,7 +61,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     final snackbarServiceProvider =
         Provider.of<SnackbarServiceProvider>(context);
+    //final buttonProvider = Provider.of<buttonProvider>(context);
 
+    bool isActive = false;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
