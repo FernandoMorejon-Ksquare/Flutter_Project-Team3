@@ -20,7 +20,7 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
 Map<String, Widget Function(BuildContext)> routes = <String, WidgetBuilder>{
   LoginScreen.routeName: (ctx) => const LoginScreen(),
   RegisterScreen.routeName: (ctx) => const RegisterScreen(),
-  HomeScreen.routeName: (ctx) => const HomeScreen(),
+  HomeScreen.routeName: (ctx) => HomeScreen(),
   BookDetailsScreen.routeName: (ctx) => const BookDetailsScreen(),
   ProfileScreen.routeName: (ctx) => const ProfileScreen(),
   FavoriteScreen.routeName: (ctx) => const FavoriteScreen(),

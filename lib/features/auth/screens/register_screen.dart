@@ -55,6 +55,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
             email: _emailCtrl.text, password: _passwordCtrl.text)
         .then((value) {
       print("User created.");
+      FirebaseAuth.instance.currentUser
+          ?.updateDisplayName("${_firstNameCtrl.text} ${_lastNameCtrl.text}");
       Navigator.pushReplacementNamed(context, HomeScreen.routeName);
     }).catchError((e) {
       print("Error: ");
