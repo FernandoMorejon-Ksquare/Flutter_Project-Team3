@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:project3_appforbooks/features/auth/controller/auth_provider.dart';
+
 import 'package:project3_appforbooks/features/auth/controller/validation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:project3_appforbooks/features/main/screens/home_screen.dart';
@@ -17,12 +17,6 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  TextEditingController firstNameCtrl = TextEditingController();
-  TextEditingController lastNameCtrl = TextEditingController();
-  TextEditingController emailCtrl = TextEditingController();
-  TextEditingController passwordCtrl = TextEditingController();
-  TextEditingController confirmPasswordCtrl = TextEditingController();
-
   bool enableBtn = false;
   final formkey = GlobalKey<FormState>();
 
@@ -67,9 +61,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool disableButton = false;
   @override
   Widget build(BuildContext context) {
-    final snackbarServiceProvider =
-        Provider.of<SnackbarServiceProvider>(context);
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -176,9 +167,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 onChanged: (value) {
                   passMatcher2 = value;
                   if (passMatcher != passMatcher2) {
-                    snackbarServiceProvider.registerMatch(context);
                   } else if (passMatcher == passMatcher2) {
-                    snackbarServiceProvider.registerMatch2(context);
                   } else {
                     null;
                   }
