@@ -30,7 +30,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _firstNameCtrl.addListener(() {
       setState(() {
@@ -42,7 +41,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   var passMatcher;
   var passMatcher2;
 
-//Remember to remove prints.
   registerFirebase() async {
     FirebaseAuth.instance
         .createUserWithEmailAndPassword(
