@@ -7,14 +7,20 @@ import 'book_model.dart';
 class BookProvider extends ChangeNotifier {
   BookProvider(
     this.service,
+    this.isSearching,
   );
 
   final BookServices service;
+  bool isSearching;
   List<Book> books = [];
 
-  Future<void> fetchBooks(String search, int index) async {
+  Future<void> fetchBooks(String search, int index, bool isSearching) async {
     final response = await service.getAllBooks(search, index);
     Iterable l = json.decode(response.body)["items"];
+    if (isSearching) {
+      books.clear();
+      isSearching = false;
+    }
     List<Book> _books = List<Book>.from(l.map((model) => Book.fromJson(model)));
     if (books.isEmpty) {
       books = _books;

@@ -22,7 +22,8 @@ void main() async {
       // ChangeNotifierProvider(create: (_) => ThemeProvider()),
       // ChangeNotifierProvider(create: (_) => AuthServiceProvider()),
       ChangeNotifierProvider(create: (_) => SnackbarServiceProvider()),
-      ChangeNotifierProvider(create: (_) => BookProvider(BookServices())),
+      ChangeNotifierProvider(
+          create: (_) => BookProvider(BookServices(), false)),
     ],
     child: const MyApp(),
   ));

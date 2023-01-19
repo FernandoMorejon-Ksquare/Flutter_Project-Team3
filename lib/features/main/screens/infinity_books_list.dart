@@ -25,13 +25,13 @@ class _InfinityBooksListState extends State<InfinityBooksList> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       final provider = Provider.of<BookProvider>(context, listen: false);
-      await provider.fetchBooks(widget.search, incremental);
+      await provider.fetchBooks(widget.search, incremental, true);
     });
     _lazyController.addListener(() async {
       if (_lazyController.position.maxScrollExtent == _lazyController.offset) {
         incremental += 20;
         final provider = Provider.of<BookProvider>(context, listen: false);
-        await provider.fetchBooks(widget.search, incremental);
+        await provider.fetchBooks(widget.search, incremental, false);
       }
     });
   }
@@ -73,7 +73,7 @@ class _InfinityBooksListState extends State<InfinityBooksList> {
                       title: Text(book.title.toString()),
                       subtitle: Text(book.author.toString()),
                       leading: IconButton(
-                        icon: book.thumbnail != null
+                        icon: book.thumbnail != "assets/no-image-icon-23494.png"
                             ? Image.network(book.thumbnail.toString())
                             : Image.asset("assets/no-image-icon-23494.png"),
                         onPressed: () {},
