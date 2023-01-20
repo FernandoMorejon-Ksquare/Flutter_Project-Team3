@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:project3_appforbooks/core/master_provider.dart';
 import 'package:project3_appforbooks/features/auth/controller/auth_provider.dart';
 import 'package:project3_appforbooks/features/auth/screens/login_screen.dart';
 import 'package:project3_appforbooks/features/main/controller/book_services.dart';
-import 'package:project3_appforbooks/features/main/screens/home_screen.dart';
-import 'package:project3_appforbooks/features/user/profile_screen.dart';
 import 'package:project3_appforbooks/routes.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -39,7 +36,7 @@ class MyApp extends StatelessWidget {
       title: 'Alexandria Books',
       //theme: CustomTheme().theme,
       onGenerateRoute: onGenerateRoute,
-      home: HomeScreen(),
+      home: LoginScreen(),
     );
   }
 }

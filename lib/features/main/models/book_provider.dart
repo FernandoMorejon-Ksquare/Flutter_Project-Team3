@@ -21,6 +21,7 @@ class BookProvider extends ChangeNotifier {
       books.clear();
       isSearching = false;
     }
+    // ignore: no_leading_underscores_for_local_identifiers
     List<Book> _books = List<Book>.from(l.map((model) => Book.fromJson(model)));
     if (books.isEmpty) {
       books = _books;

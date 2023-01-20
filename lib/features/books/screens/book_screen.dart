@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:project3_appforbooks/features/books/screens/favorites_screen.dart';
 
 class BookDetailsScreen extends StatefulWidget {
   const BookDetailsScreen({super.key});

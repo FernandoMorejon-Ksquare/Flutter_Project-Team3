@@ -48,7 +48,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   var passMatcher;
   var passMatcher2;
 
-//Remember to remove prints.
   registerFirebase() async {
     FirebaseAuth.instance
         .createUserWithEmailAndPassword(
@@ -185,7 +184,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   width: double.infinity,
                   margin: const EdgeInsets.only(left: 32, right: 32, top: 16),
                   child: ElevatedButton(
-                      style: ButtonStyle(),
+                      style: const ButtonStyle(),
                       onPressed: submit
                           ? () {
                               if (passMatcher == passMatcher2) {

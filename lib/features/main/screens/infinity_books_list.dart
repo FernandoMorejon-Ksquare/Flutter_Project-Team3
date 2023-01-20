@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
-
 import '../../books/screens/book_screen.dart';
-import '../controller/search_manager.dart';
 import '../models/book_provider.dart';
 
 class InfinityBooksList extends StatefulWidget {
