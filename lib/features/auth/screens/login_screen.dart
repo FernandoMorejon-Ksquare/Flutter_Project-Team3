@@ -31,9 +31,6 @@ class LoginScreenState extends State<LoginScreen> {
     }
   }
 
-//Remember to remove prints.
-
-  // ignore: non_constant_identifier_names
   loginFirebase() async {
     FirebaseAuth.instance
         .signInWithEmailAndPassword(
