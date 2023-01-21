@@ -14,17 +14,15 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   String _email = "";
-  String _firstName = "";
-  String _lastName = "";
+  String _name = "";
 
   @override
   Widget build(BuildContext context) {
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user != null) {
-        print(user.displayName);
         setState(() {
           _email = user.email.toString();
-          _firstName = user.displayName.toString();
+          _name = user.displayName.toString();
         });
       }
     });
@@ -51,7 +49,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Padding(
                       padding: const EdgeInsets.only(left: 32.0),
                       child: Text(
-                        _firstName != "" ? _firstName : "First name",
+                        _name != "" ? _name : "First and last name",
                         style: const TextStyle(fontSize: 48.0),
                       ),
                     ),

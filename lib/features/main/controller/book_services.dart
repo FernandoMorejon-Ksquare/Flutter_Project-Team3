@@ -6,45 +6,37 @@ import 'dart:convert';
 import 'alert_manager.dart';
 
 class BookServices {
-  int maxResults = 20;
-  int startIndex = 0;
-
-  Future<Map<String, dynamic>> getAllBooks(context, search) async {
+  Future<Response> getAllBooks(String search, int index) async {
     Uri url = Uri.https("www.googleapis.com", "/books/v1/volumes", {
       "q": search != "" ? search : "action",
-      "maxResults": "$maxResults",
-      "startIndex": "$startIndex",
+      "maxResults": "20",
+      "startIndex": "$index",
     });
     Map<String, dynamic> modelObj = {};
+    late Response response;
     try {
-      Response response = await http.get(url);
+      response = await http.get(url);
       print(url);
       modelObj = jsonDecode(response.body);
       if (response.statusCode == 200) {
-        AlertManager().displaySnackBar(context, "Books successfully loaded");
-      } else {
-        AlertManager().displaySnackBar(context, "Something went wrong");
-      }
-      return modelObj;
+        // Add alerts on the UI.
+
+      } else {}
+      return response;
     } catch (e) {
-      return modelObj;
+      return response;
     }
   }
 
   loadMore() {
-    startIndex += 20;
-    maxResults += 20;
-    // getAllBooks(context, search);
-    print(startIndex);
-    print(maxResults);
     print("PRINT MORE");
   }
 
   Future<Map<String, dynamic>> getMoreBooks(context, search) async {
     Uri url = Uri.https("www.googleapis.com", "/books/v1/volumes", {
       "q": search != "" ? search : "action",
-      "maxResults": "$maxResults",
-      "startIndex": "$startIndex",
+      // "maxResults": "$maxResults",
+      // "startIndex": "$startIndex",
     });
     Map<String, dynamic> modelObj = {};
     try {

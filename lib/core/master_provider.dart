@@ -57,5 +57,3 @@ class ThemeProvider extends ChangeNotifier {
     notifyListeners();
   }
 }
-
-class BookProvider extends ChangeNotifier {}
