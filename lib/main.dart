@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:project3_appforbooks/features/auth/controller/auth_provider.dart';
 import 'package:project3_appforbooks/features/auth/screens/login_screen.dart';
 import 'package:project3_appforbooks/features/auth/screens/register_screen.dart';
 import 'package:project3_appforbooks/features/main/controller/book_services.dart';

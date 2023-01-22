@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:project3_appforbooks/features/auth/controller/auth_provider.dart';
+
 import 'package:project3_appforbooks/features/auth/controller/validation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:project3_appforbooks/features/main/screens/home_screen.dart';
@@ -34,7 +34,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _firstNameCtrl.addListener(() {
       setState(() {
@@ -70,9 +69,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool disableButton = false;
   @override
   Widget build(BuildContext context) {
-    final snackbarServiceProvider =
-        Provider.of<SnackbarServiceProvider>(context);
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -179,9 +175,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 onChanged: (value) {
                   passMatcher2 = value;
                   if (passMatcher != passMatcher2) {
-                    snackbarServiceProvider.registerMatch(context);
                   } else if (passMatcher == passMatcher2) {
-                    snackbarServiceProvider.registerMatch2(context);
                   } else {
                     null;
                   }
