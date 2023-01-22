@@ -4,12 +4,14 @@ class Book {
     this.description,
     this.author,
     this.thumbnail,
+    this.selfLink,
   });
 
   String? title;
   String? description;
   String? author;
   String? thumbnail;
+  String? selfLink;
 
   factory Book.fromJson(Map<String, dynamic> json) => Book(
         title: json["volumeInfo"]["title"],
@@ -20,6 +22,7 @@ class Book {
         thumbnail: json["volumeInfo"]["imageLinks"] != null
             ? json["volumeInfo"]["imageLinks"]["thumbnail"]
             : "assets/no-image-icon-23494.png",
+        selfLink: json["selfLink"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -27,5 +30,6 @@ class Book {
         "description": description,
         "author": author,
         "thumbnail": thumbnail,
+        "selfLink": selfLink,
       };
 }

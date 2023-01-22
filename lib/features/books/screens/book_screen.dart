@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:project3_appforbooks/features/main/controller/alert_manager.dart';
 
 class BookDetailsScreen extends StatefulWidget {
   const BookDetailsScreen({super.key});
@@ -15,7 +18,29 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
     final args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
 
-    String buttonText = "Add to favorites";
+    FirebaseFirestore db =
+        FirebaseFirestore.instance; // variable to use database
+    FirebaseAuth fb =
+        FirebaseAuth.instance; // variable to acces user auth data.
+    Map<String, dynamic> favoriteLink = {
+      "favoritesList": []
+    }; // map to add favorite list to database.
+    dynamic favoritesList = []; // list to add favorite links.
+
+    Future<void> fetchFavoriteList() async {
+      // function to read current favorites links of the user.
+      late Map<String, dynamic> data;
+      db
+          .collection("users")
+          .doc(fb.currentUser?.uid)
+          .get()
+          .then((DocumentSnapshot doc) {
+        data = doc.data() as Map<String, dynamic>;
+        favoritesList = data["favoritesList"];
+      });
+    }
+
+    fetchFavoriteList(); // read current favorites
 
     return Scaffold(
       appBar: AppBar(
@@ -82,22 +107,41 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                 margin:
                     const EdgeInsets.only(left: 32.0, right: 32.0, top: 32.0),
                 child: ElevatedButton(
-                    style: ButtonStyle(overlayColor:
-                        MaterialStateProperty.resolveWith<Color>(
-                            (Set<MaterialState> states) {
-                      if (states.contains(MaterialState.pressed)) {
-                        return Colors.grey;
-                      } else {
-                        return Colors.black;
-                      }
-                    })),
+                    style: ElevatedButton.styleFrom(
+                        // style of the button changes if the book is on the favorite list.
+                        backgroundColor:
+                            favoritesList.contains(args["selfLink"])
+                                ? Colors.grey
+                                : Colors.blue),
                     onPressed: () {
-                      // setState(() {
-                      //   buttonText = "Remove from favorites";
-                      // });
+                      if (favoritesList.contains(args["selfLink"])) {
+                        // if book is on favorites list:
+                        AlertManager().displaySnackBar(
+                            // show snackbar with book already in favorites.
+                            context,
+                            "Book already in favorites");
+                      } else {
+                        // else add link to favorite list.
+                        favoritesList.add(args["selfLink"]);
+                        AlertManager().displaySnackBar(
+                            context, "Book added to favorites");
+                      }
+                      // refresh the widget with the set state.
+                      setState(() {
+                        favoriteLink["favoritesList"] =
+                            favoritesList; // add favorite list to the map that will allow to upload it to the database.
+                        fetchFavoriteList();
+                      });
+                      db
+                          .collection("users")
+                          .doc(fb.currentUser?.uid)
+                          .set(favoriteLink); // add favorite link to database.
                     },
                     child: Text(
-                      buttonText,
+                      favoritesList.contains(args[
+                              "selfLink"]) // Message changes if the book is in favorites.
+                          ? "Already in favorites"
+                          : "Add to favorites",
                       style: const TextStyle(fontSize: 24.0),
                     ))),
           ]),

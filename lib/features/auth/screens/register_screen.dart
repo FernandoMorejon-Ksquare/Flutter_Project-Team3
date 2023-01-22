@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:project3_appforbooks/features/auth/controller/auth_provider.dart';
@@ -17,12 +19,6 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  TextEditingController firstNameCtrl = TextEditingController();
-  TextEditingController lastNameCtrl = TextEditingController();
-  TextEditingController emailCtrl = TextEditingController();
-  TextEditingController passwordCtrl = TextEditingController();
-  TextEditingController confirmPasswordCtrl = TextEditingController();
-
   bool enableBtn = false;
   final formkey = GlobalKey<FormState>();
 
@@ -33,6 +29,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _confirmPasswordCtrl = TextEditingController();
 
   bool submit = false;
+
+  Map<String, bool> favorites = {};
 
   @override
   void initState() {
@@ -45,18 +43,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
     });
   }
 
-  var passMatcher;
-  var passMatcher2;
+  late String
+      passMatcher; // Added late keyword and the type of variable and String type.
+  late String
+      passMatcher2; // Added late keyword and the type of variable and String type.
 
-  registerFirebase() async {
-    FirebaseAuth.instance
+  Future<void> registerFirebase() async {
+    FirebaseAuth fb = FirebaseAuth.instance;
+    fb
         .createUserWithEmailAndPassword(
             email: _emailCtrl.text, password: _passwordCtrl.text)
-        .then((value) {
-      FirebaseAuth.instance.currentUser
-          ?.updateDisplayName("${_firstNameCtrl.text} ${_lastNameCtrl.text}");
-      Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+        .then((value) async {
+      User _user = fb.currentUser!; // variable to reduce same code.
+      _user.updateDisplayName("${_firstNameCtrl.text} ${_lastNameCtrl.text}");
+      Map<String, dynamic> dbUser = {
+        "userID": _user.uid
+      }; // map to with userID.
+      FirebaseFirestore.instance
+          .collection("users")
+          .doc(_user.uid)
+          .set(dbUser); // adding userID to users collection on database
     }).catchError((e) {});
+    Navigator.pushReplacementNamed(context, HomeScreen.routeName);
   }
 
   bool disableButton = false;

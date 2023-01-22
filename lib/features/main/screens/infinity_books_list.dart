@@ -43,7 +43,7 @@ class _InfinityBooksListState extends State<InfinityBooksList> {
     return SafeArea(child: Consumer<BookProvider>(
       builder: (context, value, child) {
         if (value.books.isEmpty) {
-          return const Center(child: Text("Something went wrong"));
+          return const Center(child: Text("Fetching books"));
         }
         return ListView.builder(
             controller: _lazyController,
@@ -61,6 +61,7 @@ class _InfinityBooksListState extends State<InfinityBooksList> {
                         "author": book.author,
                         "image": book.thumbnail,
                         "description": book.description,
+                        "selfLink": book.selfLink,
                       },
                     );
                   },
