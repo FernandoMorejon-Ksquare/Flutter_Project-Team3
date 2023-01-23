@@ -43,7 +43,12 @@ class _InfinityBooksListState extends State<InfinityBooksList> {
     return SafeArea(child: Consumer<BookProvider>(
       builder: (context, value, child) {
         if (value.books.isEmpty) {
-          return const Center(child: Text("Fetching books"));
+          // While books are being uploaded ,the screen will show Fetching books.
+          return const Center(
+              child: Text(
+            "Fetching books",
+            style: TextStyle(fontSize: 24.0),
+          ));
         }
         return ListView.builder(
             controller: _lazyController,
