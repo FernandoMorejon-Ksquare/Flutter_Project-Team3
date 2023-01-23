@@ -18,6 +18,10 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
     final args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
 
+// This will be used when the function fetchFavorites get refactored.
+    // CollectionReference<Map<dynamic, dynamic>> db = FirebaseFirestore.instance
+    //     .collection("users"); // variable to use database
+
     FirebaseFirestore db =
         FirebaseFirestore.instance; // variable to use database
     FirebaseAuth fb =
