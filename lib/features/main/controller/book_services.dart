@@ -1,33 +1,20 @@
 import 'dart:async';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
-
-import 'alert_manager.dart';
 
 class BookServices {
-  int maxResults = 20;
-  int startIndex = 0;
-
-  Future<Map<String, dynamic>> getAllBooks(context, search) async {
-    Uri url = Uri.https("www.googleapis.com", "/books/v1/volumes",
-        {"q": search, "maxResults": "$maxResults"});
-    Map<String, dynamic> modelObj = {};
+  Future<Response> getAllBooks(String search, int index) async {
+    Uri url = Uri.https("www.googleapis.com", "/books/v1/volumes", {
+      "q": search != "" ? search : "action",
+      "maxResults": "20",
+      "startIndex": "$index",
+    });
+    late Response response;
     try {
-      Response response = await http.get(url);
-      modelObj = jsonDecode(response.body);
-      if (response.statusCode == 200) {
-        AlertManager().displaySnackBar(context, "Books successfully loaded");
-      } else {
-        AlertManager().displaySnackBar(context, "Something went wrong");
-      }
-      return modelObj;
+      response = await http.get(url);
+      return response;
     } catch (e) {
-      return modelObj;
+      return response;
     }
-  }
-
-  loadMore() {
-    maxResults += 10;
   }
 }

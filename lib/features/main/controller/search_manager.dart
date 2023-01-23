@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:project3_appforbooks/features/main/models/home_model.dart';
+import 'package:project3_appforbooks/features/main/screens/infinity_books_list.dart';
 
 class SearchManager extends SearchDelegate {
   @override
   Widget buildResults(BuildContext context) {
-    return HomeModel().homeModel(context, query);
+    return InfinityBooksList(search: query);
   }
 
   @override

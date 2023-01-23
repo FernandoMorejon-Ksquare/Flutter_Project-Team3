@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+
 import 'package:project3_appforbooks/features/auth/controller/logreg_provider.dart';
+
 import 'package:project3_appforbooks/features/auth/controller/validation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:project3_appforbooks/features/main/screens/home_screen.dart';
@@ -29,6 +33,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool submit = false;
   bool submitButton = false;
 
+  Map<String, bool> favorites = {};
+
   @override
   void initState() {
     super.initState();
@@ -39,21 +45,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
     });
   }
 
-  var passMatcher;
-  var passMatcher2;
+  late String
+      passMatcher; // Added late keyword and the type of variable and String type.
+  late String
+      passMatcher2; // Added late keyword and the type of variable and String type.
 
-//Remember to remove prints.
-  registerFirebase() async {
-    FirebaseAuth.instance
+  Future<void> registerFirebase() async {
+    FirebaseAuth fb = FirebaseAuth.instance;
+    fb
         .createUserWithEmailAndPassword(
             email: _emailCtrl.text, password: _passwordCtrl.text)
-        .then((value) {
-      print("User created.");
-      Navigator.pushReplacementNamed(context, HomeScreen.routeName);
-    }).catchError((e) {
-      print("Error: ");
-      print(e);
-    });
+        .then((value) async {
+      User _user = fb.currentUser!; // variable to reduce same code.
+      _user.updateDisplayName("${_firstNameCtrl.text} ${_lastNameCtrl.text}");
+      Map<String, dynamic> dbUser = {
+        "userID": _user.uid
+      }; // map to with userID.
+      FirebaseFirestore.instance
+          .collection("users")
+          .doc(_user.uid)
+          .set(dbUser); // adding userID to users collection on database
+    }).catchError((e) {});
+    Navigator.pushReplacementNamed(context, HomeScreen.routeName);
   }
 
   bool disableButton = false;
@@ -63,8 +76,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final snackbarServiceProvider =
         Provider.of<SnackbarServiceProvider>(context);
     //final buttonProvider = Provider.of<buttonProvider>(context);
-
     bool isActive = false;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -171,8 +184,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 onChanged: (value) {
                   passMatcher2 = value;
                   if (passMatcher != passMatcher2) {
-                    snackbarServiceProvider.registerMatchNot(context);
-                  } else if (passMatcher == passMatcher2) {
+                   snackbarServiceProvider.registerMatchNot(context);
+                  else if (passMatcher == passMatcher2) {
                     snackbarServiceProvider.registerMatch(context);
                   } else {
                     null;
@@ -184,7 +197,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   width: double.infinity,
                   margin: const EdgeInsets.only(left: 32, right: 32, top: 16),
                   child: ElevatedButton(
-                      style: ButtonStyle(),
+                      style: const ButtonStyle(),
                       onPressed: submit
                           ? () {
                               if (passMatcher == passMatcher2) {

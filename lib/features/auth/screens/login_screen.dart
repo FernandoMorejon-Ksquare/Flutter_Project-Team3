@@ -26,26 +26,23 @@ class LoginScreenState extends State<LoginScreen> {
   void validateform() {
     final form = formkey.currentState;
     if (form!.validate()) {
-      print("Form is valid");
+      return true;
     } else {
-      print("Form Invalid");
+     return false;
     }
   }
 
-//Remember to remove prints.
 
-  // ignore: non_constant_identifier_names
+
   Future<String?> loginFirebase() async {
     FirebaseAuth.instance
         .signInWithEmailAndPassword(
             email: _emailctrl.text, password: _passwordctrl.text)
         .then((value) {
       Navigator.pushReplacementNamed(context, HomeScreen.routeName);
-      print("OK");
       return "OK";
     }).catchError((e) {
-      print("Error:");
-      return e.message;
+
     });
     return "hola";
   }

@@ -1,20 +1,36 @@
-// REMEMBER TO DELETE PRINTS AND UPDATE MODEL.
-class BookModel {
+class Book {
+  Book({
+    this.title,
+    this.description,
+    this.author,
+    this.thumbnail,
+    this.selfLink,
+  });
+
   String? title;
-  String? author;
   String? description;
-  String? thumbnailUrl;
+  String? author;
+  String? thumbnail;
+  String? selfLink;
 
-  BookModel({this.title, this.author, this.description, this.thumbnailUrl});
+  factory Book.fromJson(Map<String, dynamic> json) => Book(
+        title: json["volumeInfo"]["title"],
+        description: json["volumeInfo"]["description"] ?? "No description",
+        // Fixed key authors. Key was by mistake: author and it was returning always no author.
+        author: json["volumeInfo"]["authors"] != null
+            ? json["volumeInfo"]["authors"][0]
+            : "No author",
+        thumbnail: json["volumeInfo"]["imageLinks"] != null
+            ? json["volumeInfo"]["imageLinks"]["thumbnail"]
+            : "assets/no-image-icon-23494.png",
+        selfLink: json["selfLink"],
+      );
 
-  BookModel.fromJson(Map<String, dynamic> json) {
-    title = json['title'] ?? "Titulo #1";
-    author = json['authors'][0] ?? "Autor #1";
-    thumbnailUrl =
-        json['imageLinks']["smallThumbnail"] ?? "https://picsum.photos/200";
-    description = json['description'] ?? "descripcion #1";
-    print(title);
-    print(author);
-    print(thumbnailUrl);
-  }
+  Map<String, dynamic> toJson() => {
+        "title": title,
+        "description": description,
+        "author": author,
+        "thumbnail": thumbnail,
+        "selfLink": selfLink,
+      };
 }
