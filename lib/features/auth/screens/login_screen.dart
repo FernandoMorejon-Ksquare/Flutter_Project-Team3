@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:project3_appforbooks/features/auth/controller/logreg_provider.dart';
 import 'package:project3_appforbooks/features/auth/controller/validation.dart';
 import 'package:project3_appforbooks/features/auth/screens/register_screen.dart';
 import 'package:project3_appforbooks/features/main/screens/home_screen.dart';
@@ -25,26 +26,30 @@ class LoginScreenState extends State<LoginScreen> {
   void validateform() {
     final form = formkey.currentState;
     if (form!.validate()) {
-      print("Form is valid");
+      return true;
     } else {
-      print("Form Invalid");
+     return false;
     }
   }
 
-  loginFirebase() async {
+
+
+  Future<String?> loginFirebase() async {
     FirebaseAuth.instance
         .signInWithEmailAndPassword(
             email: _emailctrl.text, password: _passwordctrl.text)
         .then((value) {
       Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+      return "OK";
     }).catchError((e) {
-      const snackbar = SnackBar(content: Text("Your password is incorrect"));
-      ScaffoldMessenger.of(context).showSnackBar(snackbar);
+
     });
+    return "hola";
   }
 
   @override
   Widget build(BuildContext context) {
+    final snackbarServiceProvider = SnackbarServiceProvider();
     return Scaffold(
         appBar: AppBar(
           title: const Text("ALEXANDRIA"),
@@ -112,8 +117,13 @@ class LoginScreenState extends State<LoginScreen> {
                     width: double.infinity,
                     margin: const EdgeInsets.only(left: 32, right: 32, top: 32),
                     child: ElevatedButton(
-                        onPressed: () {
-                          loginFirebase();
+                        onPressed: () async {
+                          var response = await loginFirebase();
+                          if (response ==
+                              "The email address is badly formatted.") {
+                            snackbarServiceProvider
+                                .loginPasswordFormat(context);
+                          }
                         },
                         child: const Text(
                           "Log In",

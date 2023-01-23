@@ -2,6 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+
+import 'package:project3_appforbooks/features/auth/controller/logreg_provider.dart';
+
 import 'package:project3_appforbooks/features/auth/controller/validation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:project3_appforbooks/features/main/screens/home_screen.dart';
@@ -28,6 +31,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _confirmPasswordCtrl = TextEditingController();
 
   bool submit = false;
+  bool submitButton = false;
 
   Map<String, bool> favorites = {};
 
@@ -68,6 +72,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool disableButton = false;
   @override
   Widget build(BuildContext context) {
+    final authServiceProvider = Provider.of<AuthServiceProvider>(context);
+    final snackbarServiceProvider =
+        Provider.of<SnackbarServiceProvider>(context);
+    //final buttonProvider = Provider.of<buttonProvider>(context);
+    bool isActive = false;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -174,7 +184,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 onChanged: (value) {
                   passMatcher2 = value;
                   if (passMatcher != passMatcher2) {
-                  } else if (passMatcher == passMatcher2) {
+                   snackbarServiceProvider.registerMatchNot(context);
+                  else if (passMatcher == passMatcher2) {
+                    snackbarServiceProvider.registerMatch(context);
                   } else {
                     null;
                   }
@@ -191,10 +203,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               if (passMatcher == passMatcher2) {
                                 registerFirebase();
                               } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content: Text(
-                                            "Your passwords don't match")));
+                                snackbarServiceProvider.registerError1(context);
                               }
                             }
                           : null,
@@ -203,8 +212,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ))),
               TextButton(
                   onPressed: () {
-                    Navigator.pushReplacementNamed(
-                        context, LoginScreen.routeName);
+                    context
+                        .read()<SnackbarServiceProvider>()
+                        .Navigator
+                        .pushReplacementNamed(context, LoginScreen.routeName);
                   },
                   child: const Text("Already have an account?"))
             ]),
