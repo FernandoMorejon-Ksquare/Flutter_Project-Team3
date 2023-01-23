@@ -122,8 +122,6 @@ class LoginScreenState extends State<LoginScreen> {
                     child: ElevatedButton(
                         onPressed: () async {
                           var response = await loginFirebase();
-                          print(response);
-                          print("text");
                           if (response ==
                               "The email address is badly formatted.") {
                             snackbarServiceProvider

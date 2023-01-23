@@ -55,23 +55,23 @@ class SnackbarServiceProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  registerMatchNot(context) {
-    const snackbar = SnackBar(
-        duration: Duration(seconds: 1),
-        content: Text(
-          "Your passwords don't match",
-          style: TextStyle(color: Colors.red),
-        ));
-    ScaffoldMessenger.of(context).showSnackBar(snackbar);
-    notifyListeners();
-  }
-
   registerMatch(context) {
     const snackbar = SnackBar(
         duration: Duration(seconds: 1),
         content: Text(
           "Your passwords match",
           style: TextStyle(color: Colors.green),
+        ));
+    ScaffoldMessenger.of(context).showSnackBar(snackbar);
+    notifyListeners();
+  }
+
+  registerMatchNot(context) {
+    const snackbar = SnackBar(
+        duration: Duration(seconds: 1),
+        content: Text(
+          "Your passwords don't match",
+          style: TextStyle(color: Colors.red),
         ));
     ScaffoldMessenger.of(context).showSnackBar(snackbar);
     notifyListeners();

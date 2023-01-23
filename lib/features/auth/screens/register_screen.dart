@@ -199,8 +199,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ))),
               TextButton(
                   onPressed: () {
-                    Navigator.pushReplacementNamed(
-                        context, LoginScreen.routeName);
+                    context
+                        .read()<SnackbarServiceProvider>()
+                        .Navigator
+                        .pushReplacementNamed(context, LoginScreen.routeName);
                   },
                   child: const Text("Already have an account?"))
             ]),
