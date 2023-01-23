@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:project3_appforbooks/core/master_provider.dart';
-import 'package:project3_appforbooks/features/main/controller/book_services.dart';
 import 'package:project3_appforbooks/features/main/controller/search_manager.dart';
-import 'package:project3_appforbooks/features/main/models/home_model.dart';
 import 'package:project3_appforbooks/features/main/models/title_model.dart';
 import 'package:project3_appforbooks/features/main/screens/infinity_books_list.dart';
 import 'package:project3_appforbooks/features/user/profile_screen.dart';
-import 'package:provider/provider.dart';
-
-import '../../books/screens/book_screen.dart';
-import '../models/book_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project3_appforbooks/features/auth/screens/login_screen.dart';
+import 'package:project3_appforbooks/features/auth/screens/register_screen.dart';
 import 'package:project3_appforbooks/features/main/controller/book_services.dart';
 import 'package:project3_appforbooks/features/main/screens/home_screen.dart';
 import 'package:project3_appforbooks/routes.dart';
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
       title: 'Alexandria Books',
       //theme: CustomTheme().theme,
       onGenerateRoute: onGenerateRoute,
-      home: HomeScreen(),
+      home: LoginScreen(),
     );
   }
 }

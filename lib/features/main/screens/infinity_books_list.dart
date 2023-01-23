@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
-
 import '../../books/screens/book_screen.dart';
-import '../controller/search_manager.dart';
 import '../models/book_provider.dart';
 
 class InfinityBooksList extends StatefulWidget {
@@ -47,7 +43,7 @@ class _InfinityBooksListState extends State<InfinityBooksList> {
     return SafeArea(child: Consumer<BookProvider>(
       builder: (context, value, child) {
         if (value.books.isEmpty) {
-          return const Center(child: Text("Something went wrong"));
+          return const Center(child: Text("Fetching books"));
         }
         return ListView.builder(
             controller: _lazyController,
@@ -65,6 +61,7 @@ class _InfinityBooksListState extends State<InfinityBooksList> {
                         "author": book.author,
                         "image": book.thumbnail,
                         "description": book.description,
+                        "selfLink": book.selfLink,
                       },
                     );
                   },
