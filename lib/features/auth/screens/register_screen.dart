@@ -2,9 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-
 import 'package:project3_appforbooks/features/auth/controller/logreg_provider.dart';
-
 import 'package:project3_appforbooks/features/auth/controller/validation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:project3_appforbooks/features/main/screens/home_screen.dart';
@@ -184,8 +182,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 onChanged: (value) {
                   passMatcher2 = value;
                   if (passMatcher != passMatcher2) {
-                   snackbarServiceProvider.registerMatchNot(context);
-                  else if (passMatcher == passMatcher2) {
+                    snackbarServiceProvider.registerMatchNot(context);
+                  } else if (passMatcher == passMatcher2) {
                     snackbarServiceProvider.registerMatch(context);
                   } else {
                     null;

@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:form_field_validator/form_field_validator.dart';
+import 'package:project3_appforbooks/features/main/screens/home_screen.dart';
 
 class ValidationProvider extends ChangeNotifier {
   final passwordValidator = MultiValidator([
@@ -36,12 +38,13 @@ class FireBaseProvider extends ChangeNotifier {
         .then((value) {
       Navigator.pushReplacementNamed(context, HomeScreen.routeName);
     }).catchError((e) {});
+  }
+}
 
 class ButtonProvider extends ChangeNotifier {
   void disableButton() {
     var grayButton = ThemeData();
     notifyListeners();
-
   }
 }
 

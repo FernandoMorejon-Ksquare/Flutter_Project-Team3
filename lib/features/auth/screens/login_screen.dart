@@ -26,13 +26,8 @@ class LoginScreenState extends State<LoginScreen> {
   void validateform() {
     final form = formkey.currentState;
     if (form!.validate()) {
-      return true;
-    } else {
-     return false;
-    }
+    } else {}
   }
-
-
 
   Future<String?> loginFirebase() async {
     FirebaseAuth.instance
@@ -41,9 +36,7 @@ class LoginScreenState extends State<LoginScreen> {
         .then((value) {
       Navigator.pushReplacementNamed(context, HomeScreen.routeName);
       return "OK";
-    }).catchError((e) {
-
-    });
+    }).catchError((e) {});
     return "hola";
   }
 
@@ -117,8 +110,8 @@ class LoginScreenState extends State<LoginScreen> {
                     width: double.infinity,
                     margin: const EdgeInsets.only(left: 32, right: 32, top: 32),
                     child: ElevatedButton(
-                        onPressed: () async {
-                          var response = await loginFirebase();
+                        onPressed: ()  {
+                          var response = loginFirebase();
                           if (response ==
                               "The email address is badly formatted.") {
                             snackbarServiceProvider
