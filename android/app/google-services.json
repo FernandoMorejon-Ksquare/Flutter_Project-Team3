@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "149599160117",
+    "project_id": "alexandria-a1c2b",
+    "storage_bucket": "alexandria-a1c2b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:149599160117:android:33f46569ec6652239dae7c",
+        "android_client_info": {
+          "package_name": "com.example.project3_appforbooks"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "149599160117-m3tv3mlv6ueivlpfnb6h0e21upt76mjv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyLQz4ODoEfZaI4TCApIC3xQVym30J_DQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "149599160117-m3tv3mlv6ueivlpfnb6h0e21upt76mjv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "149599160117-ua1htisv8qos8h6bmkkupkscgsrtaish.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.project3Appforbooks"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
