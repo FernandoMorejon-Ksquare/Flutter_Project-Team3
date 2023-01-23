@@ -1,8 +1,25 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:project3_appforbooks/features/main/screens/home_screen.dart';
 
-class AuthServiceProvider extends ChangeNotifier {}
+class AuthServiceProvider extends ChangeNotifier {
+  TextEditingController _firstNameCtrl = TextEditingController();
+  TextEditingController _lastNameCtrl = TextEditingController();
+  TextEditingController _emailCtrl = TextEditingController();
+  TextEditingController _passwordCtrl = TextEditingController();
+  TextEditingController _confirmPasswordCtrl = TextEditingController();
 
-class ButtonProvider extends ChangeNotifier {}
+  registerFirebase(context) async {
+    FirebaseAuth.instance
+        .createUserWithEmailAndPassword(
+            email: _emailCtrl.text, password: _passwordCtrl.text)
+        .then((value) {
+      Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+    }).catchError((e) {
+      String err = e.message;
+    });
+  }
+}
 
 class SnackbarServiceProvider extends ChangeNotifier {
   loginUser(context) {
@@ -13,6 +30,7 @@ class SnackbarServiceProvider extends ChangeNotifier {
           style: TextStyle(color: Colors.white, backgroundColor: Colors.red),
         ));
     ScaffoldMessenger.of(context).showSnackBar(snackbar);
+    notifyListeners();
   }
 
   loginPassword(context) {
@@ -23,6 +41,7 @@ class SnackbarServiceProvider extends ChangeNotifier {
           style: TextStyle(color: Colors.red),
         ));
     ScaffoldMessenger.of(context).showSnackBar(snackbar);
+    notifyListeners();
   }
 
   loginPasswordFormat(context) {
@@ -33,9 +52,10 @@ class SnackbarServiceProvider extends ChangeNotifier {
           style: TextStyle(color: Colors.red),
         ));
     ScaffoldMessenger.of(context).showSnackBar(snackbar);
+    notifyListeners();
   }
 
-  registerMatch(context) {
+  registerMatchNot(context) {
     const snackbar = SnackBar(
         duration: Duration(seconds: 1),
         content: Text(
@@ -43,9 +63,10 @@ class SnackbarServiceProvider extends ChangeNotifier {
           style: TextStyle(color: Colors.red),
         ));
     ScaffoldMessenger.of(context).showSnackBar(snackbar);
+    notifyListeners();
   }
 
-  registerMatch2(context) {
+  registerMatch(context) {
     const snackbar = SnackBar(
         duration: Duration(seconds: 1),
         content: Text(
@@ -53,5 +74,17 @@ class SnackbarServiceProvider extends ChangeNotifier {
           style: TextStyle(color: Colors.green),
         ));
     ScaffoldMessenger.of(context).showSnackBar(snackbar);
+    notifyListeners();
+  }
+
+  registerError1(context) {
+    const snackbar = SnackBar(
+        duration: Duration(seconds: 1),
+        content: Text(
+          "Error with Sign Up",
+          style: TextStyle(color: Colors.red),
+        ));
+    ScaffoldMessenger.of(context).showSnackBar(snackbar);
+    notifyListeners();
   }
 }

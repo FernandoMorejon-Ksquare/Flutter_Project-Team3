@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:project3_appforbooks/features/auth/controller/auth_provider.dart';
+import 'package:project3_appforbooks/features/auth/controller/logreg_provider.dart';
 import 'package:project3_appforbooks/features/auth/controller/validation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:project3_appforbooks/features/main/screens/home_screen.dart';
@@ -59,6 +59,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool disableButton = false;
   @override
   Widget build(BuildContext context) {
+    final authServiceProvider = Provider.of<AuthServiceProvider>(context);
     final snackbarServiceProvider =
         Provider.of<SnackbarServiceProvider>(context);
     //final buttonProvider = Provider.of<buttonProvider>(context);
@@ -170,9 +171,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 onChanged: (value) {
                   passMatcher2 = value;
                   if (passMatcher != passMatcher2) {
-                    snackbarServiceProvider.registerMatch(context);
+                    snackbarServiceProvider.registerMatchNot(context);
                   } else if (passMatcher == passMatcher2) {
-                    snackbarServiceProvider.registerMatch2(context);
+                    snackbarServiceProvider.registerMatch(context);
                   } else {
                     null;
                   }
@@ -189,10 +190,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               if (passMatcher == passMatcher2) {
                                 registerFirebase();
                               } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content: Text(
-                                            "Your passwords don't match")));
+                                snackbarServiceProvider.registerError1(context);
                               }
                             }
                           : null,
