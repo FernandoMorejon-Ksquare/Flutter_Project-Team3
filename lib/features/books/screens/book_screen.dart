@@ -135,6 +135,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                             favoritesList.contains(args["selfLink"])
                                 ? Colors.grey
                                 : Colors.black),
+
                     onPressed: isEnabled
                         ? () {
                             if (favoritesList.contains(args["selfLink"])) {
