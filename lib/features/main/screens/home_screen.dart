@@ -28,7 +28,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(snackbar);
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,

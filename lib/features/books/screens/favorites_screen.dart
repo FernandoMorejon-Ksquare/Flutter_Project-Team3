@@ -45,6 +45,19 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     }
   }
 
+  // Function that request the database to delete a specific item of the favorites list.
+  deleteFromFavoriteList(String item) {
+    CollectionReference<Map<String, dynamic>> db =
+        FirebaseFirestore.instance.collection("users");
+    FirebaseAuth fb = FirebaseAuth.instance;
+    List<String> deleted = [item];
+    final deleteItem = <String, dynamic>{
+      "favoritesList": FieldValue.arrayRemove(deleted),
+    };
+    // final ref =
+    db.doc(fb.currentUser?.uid).update(deleteItem);
+  }
+
   // Initialize the widget calling the favorites books.
   @override
   void initState() {
@@ -79,6 +92,9 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                   onTap: () {
                     // refresh the state when an item is being removed from favorites.
                     setState(() {
+                      // delete from the database and then delete from local screen.
+                      deleteFromFavoriteList(
+                          favoritesBooks[index].selfLink.toString());
                       favoritesBooks.removeAt(index);
                     });
                   },

@@ -146,9 +146,11 @@ class LoginScreenState extends State<LoginScreen> {
                               context, RegisterScreen.routeName);
                         },
                         child: const Text("Sign Up"))),
-                TextButton(
-                    onPressed: () {},
-                    child: const Text("Forgot your password?")),
+                // Commented until forgot password function gets implemented.
+
+                // TextButton(
+                //     onPressed: () {},
+                //     child: const Text("Forgot your password?")),
               ])),
         ))));
   }
