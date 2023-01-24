@@ -28,25 +28,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _passwordCtrl = TextEditingController();
   final TextEditingController _confirmPasswordCtrl = TextEditingController();
 
-  bool submit = false;
-  bool submitButton = false;
-
   Map<String, bool> favorites = {};
 
-  @override
-  void initState() {
-    super.initState();
-    _firstNameCtrl.addListener(() {
-      setState(() {
-        submit = _firstNameCtrl.text.isNotEmpty;
-      });
+  bool isEnabled = false;
+
+  enabledButton() {
+    setState(() {
+      isEnabled = true;
     });
   }
 
-  late String
-      passMatcher; // Added late keyword and the type of variable and String type.
-  late String
-      passMatcher2; // Added late keyword and the type of variable and String type.
+  disabledButton() {
+    setState(() {
+      isEnabled = false;
+    });
+  }
+
+  late String passMatcher;
+  late String passMatcher2;
+  late String firstnamecheck;
+  late String lastnamecheck;
+  late String emailcheck;
 
   Future<void> registerFirebase() async {
     FirebaseAuth fb = FirebaseAuth.instance;
@@ -67,14 +69,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
     Navigator.pushReplacementNamed(context, HomeScreen.routeName);
   }
 
-  bool disableButton = false;
   @override
   Widget build(BuildContext context) {
     final authServiceProvider = Provider.of<AuthServiceProvider>(context);
     final snackbarServiceProvider =
         Provider.of<SnackbarServiceProvider>(context);
     //final buttonProvider = Provider.of<buttonProvider>(context);
-    bool isActive = false;
 
     return Scaffold(
       appBar: AppBar(
@@ -99,7 +99,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 8,
               ),
               TextFormField(
-                validator: requiredValidator,
+                onChanged: (value) {
+                  if (value.length < 7) {
+                    disabledButton();
+                  } else {
+                    enabledButton();
+                  }
+                },
                 controller: _firstNameCtrl,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
@@ -116,7 +122,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 8,
               ),
               TextFormField(
-                validator: requiredValidator,
+                onChanged: (value) {
+                  if (value.length < 7) {
+                    disabledButton();
+                  } else {
+                    enabledButton();
+                  }
+                },
                 controller: _lastNameCtrl,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
@@ -134,8 +146,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               TextFormField(
                 keyboardType: TextInputType.emailAddress,
-                validator:
-                    EmailValidator(errorText: 'Enter a valid Email Adress'),
+                onChanged: (value) {
+                  if (value.length < 7) {
+                    disabledButton();
+                  } else {
+                    enabledButton();
+                  }
+                },
                 controller: _emailCtrl,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
@@ -154,8 +171,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
               TextFormField(
                 onChanged: (value) {
                   passMatcher = value;
+                  if (value.length < 7) {
+                    disabledButton();
+                  } else {
+                    enabledButton();
+                  }
                 },
-                validator: passwordValidator,
                 controller: _passwordCtrl,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
@@ -173,7 +194,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 8,
               ),
               TextFormField(
-                validator: passwordValidator,
                 controller: _confirmPasswordCtrl,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
@@ -182,8 +202,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 onChanged: (value) {
                   passMatcher2 = value;
                   if (passMatcher != passMatcher2) {
+                    disabledButton();
                     snackbarServiceProvider.registerMatchNot(context);
                   } else if (passMatcher == passMatcher2) {
+                    enabledButton();
                     snackbarServiceProvider.registerMatch(context);
                   } else {
                     null;
@@ -195,8 +217,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   width: double.infinity,
                   margin: const EdgeInsets.only(left: 32, right: 32, top: 16),
                   child: ElevatedButton(
-                      style: const ButtonStyle(),
-                      onPressed: submit
+                      style: ButtonStyle(),
+                      onPressed: isEnabled
                           ? () {
                               if (passMatcher == passMatcher2) {
                                 registerFirebase();
@@ -210,10 +232,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ))),
               TextButton(
                   onPressed: () {
-                    context
-                        .read()<SnackbarServiceProvider>()
-                        .Navigator
-                        .pushReplacementNamed(context, LoginScreen.routeName);
+                    Navigator.pushReplacementNamed(
+                        context, LoginScreen.routeName);
                   },
                   child: const Text("Already have an account?"))
             ]),
