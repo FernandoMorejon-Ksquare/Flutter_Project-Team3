@@ -17,15 +17,6 @@ class _HomeScreenState extends State<HomeScreen> {
   String search =
       SearchManager().query == "" ? "action" : SearchManager().query;
 
-  var snackbar = const SnackBar(
-      duration: Duration(seconds: 2),
-      content: Text(
-        "Books Succesfully loaded",
-        style: TextStyle(
-          color: Colors.green,
-        ),
-      ));
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

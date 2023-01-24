@@ -13,6 +13,19 @@ class BookDetailsScreen extends StatefulWidget {
 }
 
 class _BookDetailsScreenState extends State<BookDetailsScreen> {
+  bool isEnabled = false;
+  enabledButton() {
+    setState(() {
+      isEnabled = true;
+    });
+  }
+
+  disabledButton() {
+    setState(() {
+      isEnabled = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final args =
@@ -55,8 +68,11 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
         child: SingleChildScrollView(
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            const SizedBox(
+              height: 32,
+            ),
             SizedBox(
-              height: 450,
+              height: 290,
               width: double.infinity,
               child: Column(
                 children: [
@@ -79,7 +95,8 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
               padding: const EdgeInsets.only(left: 12.0),
               child: Text(
                 args["title"],
-                style: const TextStyle(fontSize: 24.0),
+                style: const TextStyle(
+                    fontSize: 22.0, fontWeight: FontWeight.bold),
               ),
             ),
             const SizedBox(
@@ -89,17 +106,18 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
               padding: const EdgeInsets.only(left: 12.0),
               child: Text(
                 args["author"],
-                style: const TextStyle(fontSize: 24.0),
+                style: const TextStyle(
+                    fontSize: 20.0, fontStyle: FontStyle.italic),
               ),
             ),
             const SizedBox(
               height: 8,
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 12.0),
+              padding: const EdgeInsets.only(left: 8.0, right: 8),
               child: Text(
                 args["description"] ?? "No description",
-                style: const TextStyle(fontSize: 16.0),
+                style: const TextStyle(fontSize: 15.0),
               ),
             ),
             const SizedBox(
@@ -108,8 +126,8 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
             Container(
                 height: 50,
                 width: double.infinity,
-                margin:
-                    const EdgeInsets.only(left: 32.0, right: 32.0, top: 32.0),
+                margin: const EdgeInsets.only(
+                    left: 32.0, right: 32.0, top: 16.0, bottom: 8),
                 child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         // style of the button changes if the book is on the favorite list.
@@ -117,30 +135,31 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                             favoritesList.contains(args["selfLink"])
                                 ? Colors.grey
                                 : Colors.black),
-                    onPressed: () {
-                      if (favoritesList.contains(args["selfLink"])) {
-                        // if book is on favorites list:
-                        AlertManager().displaySnackBar(
-                            // show snackbar with book already in favorites.
-                            context,
-                            "Book already in favorites");
-                      } else {
-                        // else add link to favorite list.
-                        favoritesList.add(args["selfLink"]);
-                        AlertManager().displaySnackBar(
-                            context, "Book added to favorites");
-                      }
-                      // refresh the widget with the set state.
-                      setState(() {
-                        favoriteLink["favoritesList"] =
-                            favoritesList; // add favorite list to the map that will allow to upload it to the database.
-                        fetchFavoriteList();
-                      });
-                      db
-                          .collection("users")
-                          .doc(fb.currentUser?.uid)
-                          .set(favoriteLink); // add favorite link to database.
-                    },
+
+                    onPressed: isEnabled
+                        ? () {
+                            if (favoritesList.contains(args["selfLink"])) {
+                              // if book is on favorites list:
+                              AlertManager().displaySnackBar(
+                                  // show snackbar with book already in favorites.
+                                  context,
+                                  "Book already in favorites");
+                            } else {
+                              // else add link to favorite list.
+                              favoritesList.add(args["selfLink"]);
+                              AlertManager().displaySnackBar(
+                                  context, "Book added to favorites");
+                            }
+                            // refresh the widget with the set state.
+                            setState(() {
+                              favoriteLink["favoritesList"] =
+                                  favoritesList; // add favorite list to the map that will allow to upload it to the database.
+                              fetchFavoriteList();
+                            });
+                            db.collection("users").doc(fb.currentUser?.uid).set(
+                                favoriteLink); // add favorite link to database.
+                          }
+                        : null,
                     child: Text(
                       favoritesList.contains(args[
                               "selfLink"]) // Message changes if the book is in favorites.
