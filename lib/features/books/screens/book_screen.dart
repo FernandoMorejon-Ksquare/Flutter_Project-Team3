@@ -116,7 +116,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                         backgroundColor:
                             favoritesList.contains(args["selfLink"])
                                 ? Colors.grey
-                                : Colors.blue),
+                                : Colors.black),
                     onPressed: () {
                       if (favoritesList.contains(args["selfLink"])) {
                         // if book is on favorites list:
