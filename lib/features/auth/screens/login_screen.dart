@@ -19,7 +19,7 @@ class LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailctrl = TextEditingController();
   final TextEditingController _passwordctrl = TextEditingController();
 
-  bool enableBtn = false;
+  bool isEnabled = false;
   final formkey = GlobalKey<FormState>();
 
 // VALIDATING FORM
@@ -141,10 +141,12 @@ class LoginScreenState extends State<LoginScreen> {
                     width: double.infinity,
                     margin: const EdgeInsets.only(left: 32, right: 32, top: 16),
                     child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushNamed(
-                              context, RegisterScreen.routeName);
-                        },
+                        onPressed: isEnabled
+                            ? () {
+                                Navigator.pushNamed(
+                                    context, RegisterScreen.routeName);
+                              }
+                            : null,
                         child: const Text("Sign Up"))),
                 TextButton(
                     onPressed: () {},
