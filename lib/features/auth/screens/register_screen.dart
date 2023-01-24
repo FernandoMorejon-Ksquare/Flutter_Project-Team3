@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:form_field_validator/form_field_validator.dart';
 import 'package:project3_appforbooks/features/auth/controller/logreg_provider.dart';
 import 'package:project3_appforbooks/features/auth/controller/validation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -218,11 +217,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   margin: const EdgeInsets.only(left: 32, right: 32, top: 16),
                   child: ElevatedButton(
                       style: isEnabled
-                          ? ButtonStyle(
+                          ? null
+                          : ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
                               Colors.grey,
-                            ))
-                          : null,
+                            )),
                       onPressed: isEnabled
                           ? () {
                               if (passMatcher == passMatcher2) {
