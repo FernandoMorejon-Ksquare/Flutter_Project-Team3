@@ -17,7 +17,6 @@ void main() async {
 
   runApp(MultiProvider(
     providers: [
-      // ChangeNotifierProvider(create: (_) => ThemeProvider()),
       ChangeNotifierProvider(
           create: (_) => BookProvider(BookServices(), false)),
       // This will be used when provider for the favorites get implemented.
