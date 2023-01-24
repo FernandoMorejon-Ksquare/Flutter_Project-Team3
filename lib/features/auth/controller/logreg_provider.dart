@@ -17,16 +17,29 @@ class AuthServiceProvider extends ChangeNotifier {
       Navigator.pushReplacementNamed(context, HomeScreen.routeName);
     }).catchError((e) {
       String err = e.message;
+      if (e.message == "Given String is empty or null") {}
+      return err;
     });
   }
 }
 
 class SnackbarServiceProvider extends ChangeNotifier {
-  loginUser(context) {
-    const snackbar = SnackBar(
+  loginUser(context, message) {
+    var snackbar = SnackBar(
         duration: Duration(seconds: 3),
         content: Text(
-          "This User doesn't exist",
+          "$message",
+          style: TextStyle(color: Colors.white, backgroundColor: Colors.red),
+        ));
+    ScaffoldMessenger.of(context).showSnackBar(snackbar);
+    notifyListeners();
+  }
+
+  loginUserNotExist(context) {
+    const snackbar = SnackBar(
+        duration: Duration(seconds: 2),
+        content: Text(
+          "Given String is empty or null",
           style: TextStyle(color: Colors.white, backgroundColor: Colors.red),
         ));
     ScaffoldMessenger.of(context).showSnackBar(snackbar);

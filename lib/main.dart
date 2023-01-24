@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
-
 import 'package:project3_appforbooks/features/auth/screens/login_screen.dart';
 import 'package:project3_appforbooks/features/main/controller/book_services.dart';
-=======
 import 'package:project3_appforbooks/core/common/styles/theme.dart';
 import 'package:project3_appforbooks/features/auth/controller/logreg_provider.dart';
-import 'package:project3_appforbooks/features/auth/screens/login_screen.dart';
-
 import 'package:project3_appforbooks/routes.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'features/auth/controller/logreg_provider.dart';
 import 'features/main/models/book_provider.dart';
 import 'firebase_options.dart';
 
@@ -29,7 +24,6 @@ void main() async {
       // ChangeNotifierProvider(create: (_) => FavoritesProvider()),
       ChangeNotifierProvider(create: (_) => AuthServiceProvider()),
       ChangeNotifierProvider(create: (_) => SnackbarServiceProvider())
-
     ],
     child: const MyApp(),
   ));
@@ -40,13 +34,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Alexandria Books',
       theme: CustomTheme().theme,
       onGenerateRoute: onGenerateRoute,
       home: const LoginScreen(),
-
     );
   }
 }

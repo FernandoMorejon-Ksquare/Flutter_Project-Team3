@@ -25,14 +25,8 @@ class LoginScreenState extends State<LoginScreen> {
 // VALIDATING FORM
   void validateform() {
     final form = formkey.currentState;
-    if (form!.validate()) {
-      return true;
-    } else {
-     return false;
-    }
+    form?.validate();
   }
-
-
 
   Future<String?> loginFirebase() async {
     FirebaseAuth.instance
@@ -40,11 +34,30 @@ class LoginScreenState extends State<LoginScreen> {
             email: _emailctrl.text, password: _passwordctrl.text)
         .then((value) {
       Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+      var snackbar = const SnackBar(
+          duration: Duration(seconds: 2),
+          content: Text(
+            "Loading...",
+            style: TextStyle(
+              color: Colors.green,
+            ),
+          ));
+      ScaffoldMessenger.of(context).showSnackBar(snackbar);
       return "OK";
     }).catchError((e) {
+      String message = e.message;
+      var snackbar = SnackBar(
+          duration: const Duration(seconds: 3),
+          content: Text(
+            message,
+            style: const TextStyle(
+              color: Colors.red,
+            ),
+          ));
+      ScaffoldMessenger.of(context).showSnackBar(snackbar);
 
+      return message;
     });
-    return "hola";
   }
 
   @override
@@ -117,13 +130,8 @@ class LoginScreenState extends State<LoginScreen> {
                     width: double.infinity,
                     margin: const EdgeInsets.only(left: 32, right: 32, top: 32),
                     child: ElevatedButton(
-                        onPressed: () async {
-                          var response = await loginFirebase();
-                          if (response ==
-                              "The email address is badly formatted.") {
-                            snackbarServiceProvider
-                                .loginPasswordFormat(context);
-                          }
+                        onPressed: () {
+                          loginFirebase();
                         },
                         child: const Text(
                           "Log In",
