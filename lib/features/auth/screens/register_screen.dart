@@ -217,7 +217,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   width: double.infinity,
                   margin: const EdgeInsets.only(left: 32, right: 32, top: 16),
                   child: ElevatedButton(
-                      style: ButtonStyle(),
+                      style: isEnabled
+                          ? ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.grey,
+                            ))
+                          : null,
                       onPressed: isEnabled
                           ? () {
                               if (passMatcher == passMatcher2) {
