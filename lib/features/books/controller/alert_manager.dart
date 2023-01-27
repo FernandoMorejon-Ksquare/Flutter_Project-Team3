@@ -6,7 +6,11 @@ class AlertManager {
         duration: const Duration(milliseconds: 1500),
         content: Text(
           message,
-          style: const TextStyle(fontSize: 20.0, color: Colors.green),
+          style: TextStyle(
+              fontSize: 20.0,
+              color: message == "Book already in favorites"
+                  ? Colors.red
+                  : Colors.green),
         )));
   }
 }
