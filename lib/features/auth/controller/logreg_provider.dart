@@ -3,11 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:project3_appforbooks/features/main/screens/home_screen.dart';
 
 class AuthServiceProvider extends ChangeNotifier {
-  TextEditingController _firstNameCtrl = TextEditingController();
-  TextEditingController _lastNameCtrl = TextEditingController();
-  TextEditingController _emailCtrl = TextEditingController();
-  TextEditingController _passwordCtrl = TextEditingController();
-  TextEditingController _confirmPasswordCtrl = TextEditingController();
+  final TextEditingController _emailCtrl = TextEditingController();
+  final TextEditingController _passwordCtrl = TextEditingController();
 
   registerFirebase(context) async {
     FirebaseAuth.instance
@@ -18,6 +15,7 @@ class AuthServiceProvider extends ChangeNotifier {
     }).catchError((e) {
       String err = e.message;
       if (e.message == "Given String is empty or null") {}
+      // ignore: invalid_return_type_for_catch_error
       return err;
     });
   }
@@ -25,80 +23,80 @@ class AuthServiceProvider extends ChangeNotifier {
 
 class SnackbarServiceProvider extends ChangeNotifier {
   loginUser(context, message) {
-    var snackbar = SnackBar(
+    SnackBar snackBar = SnackBar(
         duration: const Duration(seconds: 3),
         content: Text(
           "$message",
           style:
               const TextStyle(color: Colors.white, backgroundColor: Colors.red),
         ));
-    ScaffoldMessenger.of(context).showSnackBar(snackbar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
     notifyListeners();
   }
 
   loginUserNotExist(context) {
-    const snackbar = SnackBar(
+    const SnackBar snackBar = SnackBar(
         duration: Duration(seconds: 2),
         content: Text(
           "Given String is empty or null",
           style: TextStyle(color: Colors.white, backgroundColor: Colors.red),
         ));
-    ScaffoldMessenger.of(context).showSnackBar(snackbar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
     notifyListeners();
   }
 
   loginPassword(context) {
-    const snackbar = SnackBar(
+    const SnackBar snackBar = SnackBar(
         duration: Duration(seconds: 2),
         content: Text(
           "Your password is incorrect",
           style: TextStyle(color: Colors.red),
         ));
-    ScaffoldMessenger.of(context).showSnackBar(snackbar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
     notifyListeners();
   }
 
   loginPasswordFormat(context) {
-    const snackbar = SnackBar(
+    const SnackBar snackBar = SnackBar(
         duration: Duration(seconds: 2),
         content: Text(
           "Your password is badly formatted",
           style: TextStyle(color: Colors.red),
         ));
-    ScaffoldMessenger.of(context).showSnackBar(snackbar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
     notifyListeners();
   }
 
   registerMatch(context) {
-    const snackbar = SnackBar(
+    const SnackBar snackBar = SnackBar(
         duration: Duration(seconds: 1),
         content: Text(
           "Your passwords match",
           style: TextStyle(color: Colors.green),
         ));
-    ScaffoldMessenger.of(context).showSnackBar(snackbar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
     notifyListeners();
   }
 
   registerMatchNot(context) {
-    const snackbar = SnackBar(
+    const SnackBar snackBar = SnackBar(
         duration: Duration(seconds: 1),
         content: Text(
           "Your passwords don't match",
           style: TextStyle(color: Colors.red),
         ));
-    ScaffoldMessenger.of(context).showSnackBar(snackbar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
     notifyListeners();
   }
 
   registerError1(context) {
-    const snackbar = SnackBar(
+    const SnackBar snackBar = SnackBar(
         duration: Duration(seconds: 1),
         content: Text(
           "Error with Sign Up",
           style: TextStyle(color: Colors.red),
         ));
-    ScaffoldMessenger.of(context).showSnackBar(snackbar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
     notifyListeners();
   }
 }

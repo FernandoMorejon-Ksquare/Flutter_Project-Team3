@@ -17,7 +17,7 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   bool enableBtn = false;
-  final formkey = GlobalKey<FormState>();
+  final formJKey = GlobalKey<FormState>();
 
   final TextEditingController _firstNameCtrl = TextEditingController();
   final TextEditingController _lastNameCtrl = TextEditingController();
@@ -43,9 +43,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   late String passMatcher;
   late String passMatcher2;
-  late String firstnamecheck;
-  late String lastnamecheck;
-  late String emailcheck;
+  late String firstNameCheck;
+  late String lastNameCheck;
+  late String emailCheck;
 
   Future<void> registerFirebase() async {
     FirebaseAuth fb = FirebaseAuth.instance;
@@ -53,12 +53,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
         .createUserWithEmailAndPassword(
             email: _emailCtrl.text, password: _passwordCtrl.text)
         .then((value) async {
-      User user = fb.currentUser!; // variable to reduce same code.
-      user.updateDisplayName("${_firstNameCtrl.text} ${_lastNameCtrl.text}");
-      Map<String, dynamic> dbUser = {"userID": user.uid}; // map to with userID.
+      User _user = fb.currentUser!; // variable to reduce same code.
+      _user.updateDisplayName("${_firstNameCtrl.text} ${_lastNameCtrl.text}");
+      Map<String, dynamic> dbUser = {
+        "userID": _user.uid
+      }; // map to with userID.
       FirebaseFirestore.instance
           .collection("users")
-          .doc(user.uid)
+          .doc(_user.uid)
           .set(dbUser); // adding userID to users collection on database
     }).catchError((e) {});
     Navigator.pushReplacementNamed(context, HomeScreen.routeName);
@@ -66,6 +68,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final authServiceProvider = Provider.of<AuthServiceProvider>(context);
     final snackbarServiceProvider =
         Provider.of<SnackbarServiceProvider>(context);
 
@@ -79,7 +82,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         child: Container(
           margin: const EdgeInsets.only(left: 24, right: 24),
           child: Form(
-            key: formkey,
+            key: formJKey,
             child: Column(children: [
               const SizedBox(
                 height: 64,

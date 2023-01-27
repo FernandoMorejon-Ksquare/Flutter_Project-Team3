@@ -16,7 +16,6 @@ class Book {
   factory Book.fromJson(Map<String, dynamic> json) => Book(
         title: json["volumeInfo"]["title"],
         description: json["volumeInfo"]["description"] ?? "No description",
-        // Fixed key authors. Key was by mistake: author and it was returning always no author.
         author: json["volumeInfo"]["authors"] != null
             ? json["volumeInfo"]["authors"][0]
             : "No author",
