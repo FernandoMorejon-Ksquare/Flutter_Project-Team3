@@ -140,12 +140,10 @@ class LoginScreenState extends State<LoginScreen> {
                     width: double.infinity,
                     margin: const EdgeInsets.only(left: 32, right: 32, top: 16),
                     child: ElevatedButton(
-                        onPressed: isEnabled
-                            ? () {
-                                Navigator.pushNamed(
-                                    context, RegisterScreen.routeName);
-                              }
-                            : null,
+                        onPressed: () {
+                          Navigator.pushNamed(
+                              context, RegisterScreen.routeName);
+                        },
                         child: const Text("Sign Up"))),
                 // Commented until forgot password function gets implemented.
 
