@@ -48,11 +48,21 @@ class AuthServiceProvider extends ChangeNotifier {
         .then((value) async {
       User userLoged = fb.currentUser!;
       userLoged.updateDisplayName("$firstName $lastName");
-      Map<String, dynamic> dbUser = {"userID": userLoged.uid};
+
+      Map<String, dynamic> dbUser = {
+        "favoritesList": [""]
+      };
+      CollectionReference<Map<String, dynamic>> db =
+          FirebaseFirestore.instance.collection("users");
       FirebaseFirestore.instance
           .collection("users")
           .doc(userLoged.uid)
           .set(dbUser);
+      List<String> deleted = [""];
+      final deleteItem = <String, dynamic>{
+        "favoritesList": FieldValue.arrayRemove(deleted),
+      };
+      db.doc(fb.currentUser?.uid).update(deleteItem);
     }).catchError((e) {});
     Navigator.pushReplacementNamed(context, HomeScreen.routeName);
   }
