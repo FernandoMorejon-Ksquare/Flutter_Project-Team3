@@ -3,7 +3,6 @@ import 'package:project3_appforbooks/features/auth/screens/login_screen.dart';
 import 'package:project3_appforbooks/features/main/controller/book_services.dart';
 import 'package:project3_appforbooks/core/common/styles/theme.dart';
 import 'package:project3_appforbooks/features/auth/controller/logreg_provider.dart';
-import 'package:project3_appforbooks/features/main/screens/home_screen.dart';
 import 'package:project3_appforbooks/routes.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -20,8 +19,6 @@ void main() async {
     providers: [
       ChangeNotifierProvider(
           create: (_) => BookProvider(BookServices(), false)),
-      // This will be used when provider for the favorites get implemented.
-      // ChangeNotifierProvider(create: (_) => FavoritesProvider()),
       ChangeNotifierProvider(create: (_) => AuthServiceProvider()),
       ChangeNotifierProvider(create: (_) => SnackbarServiceProvider())
     ],

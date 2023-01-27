@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project3_appforbooks/features/books/screens/book_details_screen.dart';
+import 'package:project3_appforbooks/features/books/screens/book_screen.dart';
 import 'package:project3_appforbooks/features/main/screens/home_screen.dart';
 import 'package:project3_appforbooks/features/user/profile_screen.dart';
 import 'features/auth/screens/login_screen.dart';

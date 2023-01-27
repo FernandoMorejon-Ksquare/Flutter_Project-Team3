@@ -5,9 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:project3_appforbooks/features/main/screens/home_screen.dart';
 
 class AuthServiceProvider extends ChangeNotifier {
-  final TextEditingController _emailCtrl = TextEditingController();
-  final TextEditingController _passwordCtrl = TextEditingController();
-
   String validateEmail(String email) {
     String emailMessage = "";
     if (email.isEmpty) {
