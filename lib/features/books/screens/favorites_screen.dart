@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
+import 'package:project3_appforbooks/features/main/screens/home_screen.dart';
 import '../../main/models/book_model.dart';
 import '../models/favorite_model.dart';
 
@@ -63,7 +64,14 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(centerTitle: true, title: const Text('Favorites')),
+      appBar: AppBar(
+          centerTitle: true,
+          title: const Text('Favorites'),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () =>
+                Navigator.pushReplacementNamed(context, HomeScreen.routeName),
+          )),
       body: ListView.builder(
         itemCount: favoritesBooks.length,
         itemBuilder: (context, index) {

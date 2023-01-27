@@ -34,22 +34,24 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
   Map<String, dynamic> favoriteLink = {
     "favoritesList": []
   }; // map to add favorite list to database.
-  dynamic favoritesList = []; // list to add favorite links.
+  var favoritesList = []; // list to add favorite links.
 
   Future<void> fetchFavoriteList() async {
     // function to read current favorites links of the user.
     late Map<String, dynamic> data;
-    db
+    await db
         .collection("users")
         .doc(fb.currentUser?.uid)
         .get()
         .then((DocumentSnapshot doc) {
       data = doc.data() as Map<String, dynamic>;
-      favoritesList = data["favoritesList"];
+      setState(() {
+        favoritesList = data["favoritesList"];
+      });
     });
   }
 
-  enableButtonFavorite(List<String> favoritesList, String currentBook) {
+  enableButtonFavorite(List<dynamic> favoritesList, String currentBook) {
     if (favoritesList.contains(currentBook)) {
       setState(() {
         isEnabled2 = true;
@@ -69,9 +71,11 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(isEnabled2);
     final args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-
+    fetchFavoriteList();
+    print(favoritesList);
     enableButtonFavorite(favoritesList, args["selfLink"]);
 
     return Scaffold(
