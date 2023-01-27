@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
       title: 'Alexandria Books',
       theme: CustomTheme().theme,
       onGenerateRoute: onGenerateRoute,
-      home: const HomeScreen(),
+      home: const LoginScreen(),
     );
   }
 }
