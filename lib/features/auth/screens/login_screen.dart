@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:project3_appforbooks/features/auth/controller/logreg_provider.dart';
 import 'package:project3_appforbooks/features/auth/controller/validation.dart';
 import 'package:project3_appforbooks/features/auth/screens/register_screen.dart';
-import 'package:project3_appforbooks/features/main/screens/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -20,37 +19,6 @@ class LoginScreenState extends State<LoginScreen> {
 
   bool isEnabled = false;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
-// VALIDATING FORM
-  void validateForm() {
-    final FormState? form = formKey.currentState;
-    form?.validate();
-  }
-
-// Type of the function return is void, not a String.
-  Future<void> loginFirebase() async {
-    FirebaseAuth.instance
-        .signInWithEmailAndPassword(
-            email: _emailCtrl.text, password: _passwordCtrl.text)
-        .then((value) {
-      Navigator.pushReplacementNamed(context, HomeScreen.routeName);
-
-      return "OK";
-    }).catchError((e) {
-      String message = e.message;
-      var snackBar = SnackBar(
-          duration: const Duration(seconds: 3),
-          content: Text(
-            message,
-            style: const TextStyle(
-              color: Colors.red,
-            ),
-          ));
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
-      return message;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,12 +57,31 @@ class LoginScreenState extends State<LoginScreen> {
                     validator:
                         EmailValidator(errorText: 'Enter a valid Email Adress'),
                     controller: _emailCtrl,
+                    onChanged: (email) {
+                      AuthServiceProvider().validateEmail(email);
+                      if (AuthServiceProvider().validateEmail(email) ==
+                          "Invalid Email Address") {
+                        setState(() {
+                          isEnabled = false;
+                        });
+                      } else {
+                        setState(() {
+                          isEnabled = true;
+                        });
+                      }
+                    },
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: 'Enter your Email Adress'),
                     keyboardType: TextInputType.emailAddress,
                   ),
                 ),
+                Padding(
+                    padding: const EdgeInsets.all(0.0),
+                    child: Text(
+                      AuthServiceProvider().validateEmail(_emailCtrl.text),
+                      style: const TextStyle(color: Colors.red),
+                    )),
                 const SizedBox(
                   height: 16,
                 ),
@@ -121,9 +108,19 @@ class LoginScreenState extends State<LoginScreen> {
                     width: double.infinity,
                     margin: const EdgeInsets.only(left: 32, right: 32, top: 32),
                     child: ElevatedButton(
-                        onPressed: () {
-                          loginFirebase();
-                        },
+                        style: isEnabled
+                            ? null
+                            : ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                Colors.grey,
+                              )),
+                        onPressed: isEnabled
+                            ? () {
+                                AuthServiceProvider().loginFirebase(context,
+                                    _emailCtrl.text, _passwordCtrl.text);
+                              }
+                            : null,
                         child: const Text(
                           "Log In",
                         ))),

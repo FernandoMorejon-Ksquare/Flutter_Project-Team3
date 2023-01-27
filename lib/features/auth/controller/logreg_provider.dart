@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project3_appforbooks/features/main/screens/home_screen.dart';
@@ -5,6 +6,41 @@ import 'package:project3_appforbooks/features/main/screens/home_screen.dart';
 class AuthServiceProvider extends ChangeNotifier {
   final TextEditingController _emailCtrl = TextEditingController();
   final TextEditingController _passwordCtrl = TextEditingController();
+
+  String validateEmail(String email) {
+    String emailMessage = "";
+    if (email.isEmpty) {
+      emailMessage = "";
+    } else if (!EmailValidator.validate(email, true, true)) {
+      emailMessage = "Invalid Email Address";
+    } else {
+      emailMessage = "";
+    }
+    notifyListeners();
+    return emailMessage;
+  }
+
+  Future<void> loginFirebase(context, String email, String password) async {
+    FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: email, password: password)
+        .then((value) {
+      Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+      return "OK";
+    }).catchError((e) {
+      String message = e.message;
+      var snackBar = SnackBar(
+          duration: const Duration(seconds: 3),
+          content: Text(
+            message,
+            style: const TextStyle(
+              color: Colors.red,
+            ),
+          ));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+      return message;
+    });
+  }
 
   registerFirebase(context) async {
     FirebaseAuth.instance
