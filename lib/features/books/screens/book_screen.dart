@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:project3_appforbooks/features/main/controller/alert_manager.dart';
+import 'package:project3_appforbooks/features/books/controller/alert_manager.dart';
 
 class BookDetailsScreen extends StatefulWidget {
   const BookDetailsScreen({super.key});
@@ -135,30 +135,30 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                             favoritesList.contains(args["selfLink"])
                                 ? Colors.grey
                                 : Colors.black),
-                    onPressed: isEnabled
-                        ? () {
-                            if (favoritesList.contains(args["selfLink"])) {
-                              // if book is on favorites list:
-                              AlertManager().displaySnackBar(
-                                  // show snackbar with book already in favorites.
-                                  context,
-                                  "Book already in favorites");
-                            } else {
-                              // else add link to favorite list.
-                              favoritesList.add(args["selfLink"]);
-                              AlertManager().displaySnackBar(
-                                  context, "Book added to favorites");
-                            }
-                            // refresh the widget with the set state.
-                            setState(() {
-                              favoriteLink["favoritesList"] =
-                                  favoritesList; // add favorite list to the map that will allow to upload it to the database.
-                              fetchFavoriteList();
-                            });
-                            db.collection("users").doc(fb.currentUser?.uid).set(
-                                favoriteLink); // add favorite link to database.
-                          }
-                        : null,
+                    onPressed: () {
+                      if (favoritesList.contains(args["selfLink"])) {
+                        // if book is on favorites list:
+                        AlertManager().displaySnackBar(
+                            // show snackbar with book already in favorites.
+                            context,
+                            "Book already in favorites");
+                      } else {
+                        // else add link to favorite list.
+                        favoritesList.add(args["selfLink"]);
+                        AlertManager().displaySnackBar(
+                            context, "Book added to favorites");
+                      }
+                      // refresh the widget with the set state.
+                      setState(() {
+                        favoriteLink["favoritesList"] =
+                            favoritesList; // add favorite list to the map that will allow to upload it to the database.
+                        fetchFavoriteList();
+                      });
+                      db
+                          .collection("users")
+                          .doc(fb.currentUser?.uid)
+                          .set(favoriteLink); // add favorite link to database.
+                    },
                     child: Text(
                       favoritesList.contains(args[
                               "selfLink"]) // Message changes if the book is in favorites.

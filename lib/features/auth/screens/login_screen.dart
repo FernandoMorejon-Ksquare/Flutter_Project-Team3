@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:project3_appforbooks/features/auth/controller/logreg_provider.dart';
 import 'package:project3_appforbooks/features/auth/controller/validation.dart';
 import 'package:project3_appforbooks/features/auth/screens/register_screen.dart';
 import 'package:project3_appforbooks/features/main/screens/home_screen.dart';
@@ -16,37 +15,30 @@ class LoginScreen extends StatefulWidget {
 }
 
 class LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _emailctrl = TextEditingController();
-  final TextEditingController _passwordctrl = TextEditingController();
+  final TextEditingController _emailCtrl = TextEditingController();
+  final TextEditingController _passwordCtrl = TextEditingController();
 
   bool isEnabled = false;
-  final formkey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
 // VALIDATING FORM
-  void validateform() {
-    final form = formkey.currentState;
+  void validateForm() {
+    final FormState? form = formKey.currentState;
     form?.validate();
   }
 
-  Future<String?> loginFirebase() async {
+// Type of the function return is void, not a String.
+  Future<void> loginFirebase() async {
     FirebaseAuth.instance
         .signInWithEmailAndPassword(
-            email: _emailctrl.text, password: _passwordctrl.text)
+            email: _emailCtrl.text, password: _passwordCtrl.text)
         .then((value) {
       Navigator.pushReplacementNamed(context, HomeScreen.routeName);
-      var snackbar = const SnackBar(
-          duration: Duration(seconds: 2),
-          content: Text(
-            "Loading...",
-            style: TextStyle(
-              color: Colors.green,
-            ),
-          ));
-      ScaffoldMessenger.of(context).showSnackBar(snackbar);
+
       return "OK";
     }).catchError((e) {
       String message = e.message;
-      var snackbar = SnackBar(
+      var snackBar = SnackBar(
           duration: const Duration(seconds: 3),
           content: Text(
             message,
@@ -54,7 +46,7 @@ class LoginScreenState extends State<LoginScreen> {
               color: Colors.red,
             ),
           ));
-      ScaffoldMessenger.of(context).showSnackBar(snackbar);
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
       return message;
     });
@@ -62,7 +54,6 @@ class LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final snackbarServiceProvider = SnackbarServiceProvider();
     return Scaffold(
         appBar: AppBar(
           title: const Text("ALEXANDRIA"),
@@ -73,7 +64,7 @@ class LoginScreenState extends State<LoginScreen> {
                 child: Container(
           margin: const EdgeInsets.only(right: 16, left: 16),
           child: Form(
-              key: formkey,
+              key: formKey,
               child: Column(children: [
                 const SizedBox(
                   height: 32,
@@ -97,7 +88,7 @@ class LoginScreenState extends State<LoginScreen> {
                   child: TextFormField(
                     validator:
                         EmailValidator(errorText: 'Enter a valid Email Adress'),
-                    controller: _emailctrl,
+                    controller: _emailCtrl,
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: 'Enter your Email Adress'),
@@ -118,7 +109,7 @@ class LoginScreenState extends State<LoginScreen> {
                   margin: const EdgeInsets.only(right: 32, left: 32),
                   child: TextFormField(
                     validator: passwordValidator,
-                    controller: _passwordctrl,
+                    controller: _passwordCtrl,
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: 'Enter your Password'),
@@ -148,9 +139,6 @@ class LoginScreenState extends State<LoginScreen> {
                               }
                             : null,
                         child: const Text("Sign Up"))),
-                TextButton(
-                    onPressed: () {},
-                    child: const Text("Forgot your password?")),
               ])),
         ))));
   }

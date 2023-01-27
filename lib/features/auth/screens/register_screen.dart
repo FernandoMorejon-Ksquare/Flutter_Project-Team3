@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:project3_appforbooks/features/auth/controller/logreg_provider.dart';
-import 'package:project3_appforbooks/features/auth/controller/validation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:project3_appforbooks/features/main/screens/home_screen.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +17,7 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   bool enableBtn = false;
-  final formkey = GlobalKey<FormState>();
+  final formJKey = GlobalKey<FormState>();
 
   final TextEditingController _firstNameCtrl = TextEditingController();
   final TextEditingController _lastNameCtrl = TextEditingController();
@@ -45,9 +43,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   late String passMatcher;
   late String passMatcher2;
-  late String firstnamecheck;
-  late String lastnamecheck;
-  late String emailcheck;
+  late String firstNameCheck;
+  late String lastNameCheck;
+  late String emailCheck;
 
   Future<void> registerFirebase() async {
     FirebaseAuth fb = FirebaseAuth.instance;
@@ -55,14 +53,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
         .createUserWithEmailAndPassword(
             email: _emailCtrl.text, password: _passwordCtrl.text)
         .then((value) async {
-      User _user = fb.currentUser!; // variable to reduce same code.
-      _user.updateDisplayName("${_firstNameCtrl.text} ${_lastNameCtrl.text}");
+      User userLoged = fb.currentUser!; // variable to reduce same code.
+      userLoged
+          .updateDisplayName("${_firstNameCtrl.text} ${_lastNameCtrl.text}");
       Map<String, dynamic> dbUser = {
-        "userID": _user.uid
+        "userID": userLoged.uid
       }; // map to with userID.
       FirebaseFirestore.instance
           .collection("users")
-          .doc(_user.uid)
+          .doc(userLoged.uid)
           .set(dbUser); // adding userID to users collection on database
     }).catchError((e) {});
     Navigator.pushReplacementNamed(context, HomeScreen.routeName);
@@ -71,7 +70,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     final authServiceProvider = Provider.of<AuthServiceProvider>(context);
-    final snackbarServiceProvider =
+    final snackBarServiceProvider =
         Provider.of<SnackbarServiceProvider>(context);
     //final buttonProvider = Provider.of<buttonProvider>(context);
 
@@ -85,7 +84,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         child: Container(
           margin: const EdgeInsets.only(left: 24, right: 24),
           child: Form(
-            key: formkey,
+            key: formJKey,
             child: Column(children: [
               const SizedBox(
                 height: 64,
@@ -202,10 +201,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   passMatcher2 = value;
                   if (passMatcher != passMatcher2) {
                     disabledButton();
-                    snackbarServiceProvider.registerMatchNot(context);
+                    snackBarServiceProvider.registerMatchNot(context);
                   } else if (passMatcher == passMatcher2) {
                     enabledButton();
-                    snackbarServiceProvider.registerMatch(context);
+                    snackBarServiceProvider.registerMatch(context);
                   } else {
                     null;
                   }
@@ -227,7 +226,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               if (passMatcher == passMatcher2) {
                                 registerFirebase();
                               } else {
-                                snackbarServiceProvider.registerError1(context);
+                                snackBarServiceProvider.registerError1(context);
                               }
                             }
                           : null,
