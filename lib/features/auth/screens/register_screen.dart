@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:project3_appforbooks/features/auth/controller/logreg_provider.dart';
-import 'package:project3_appforbooks/features/auth/controller/validation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:project3_appforbooks/features/main/screens/home_screen.dart';
 import 'package:provider/provider.dart';
@@ -55,14 +53,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
         .createUserWithEmailAndPassword(
             email: _emailCtrl.text, password: _passwordCtrl.text)
         .then((value) async {
-      User _user = fb.currentUser!; // variable to reduce same code.
-      _user.updateDisplayName("${_firstNameCtrl.text} ${_lastNameCtrl.text}");
-      Map<String, dynamic> dbUser = {
-        "userID": _user.uid
-      }; // map to with userID.
+      User user = fb.currentUser!; // variable to reduce same code.
+      user.updateDisplayName("${_firstNameCtrl.text} ${_lastNameCtrl.text}");
+      Map<String, dynamic> dbUser = {"userID": user.uid}; // map to with userID.
       FirebaseFirestore.instance
           .collection("users")
-          .doc(_user.uid)
+          .doc(user.uid)
           .set(dbUser); // adding userID to users collection on database
     }).catchError((e) {});
     Navigator.pushReplacementNamed(context, HomeScreen.routeName);
@@ -70,10 +66,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final authServiceProvider = Provider.of<AuthServiceProvider>(context);
     final snackbarServiceProvider =
         Provider.of<SnackbarServiceProvider>(context);
-    //final buttonProvider = Provider.of<buttonProvider>(context);
 
     return Scaffold(
       appBar: AppBar(

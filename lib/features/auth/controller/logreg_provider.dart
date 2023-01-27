@@ -26,10 +26,11 @@ class AuthServiceProvider extends ChangeNotifier {
 class SnackbarServiceProvider extends ChangeNotifier {
   loginUser(context, message) {
     var snackbar = SnackBar(
-        duration: Duration(seconds: 3),
+        duration: const Duration(seconds: 3),
         content: Text(
           "$message",
-          style: TextStyle(color: Colors.white, backgroundColor: Colors.red),
+          style:
+              const TextStyle(color: Colors.white, backgroundColor: Colors.red),
         ));
     ScaffoldMessenger.of(context).showSnackBar(snackbar);
     notifyListeners();
