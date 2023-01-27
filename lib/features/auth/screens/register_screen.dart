@@ -1,8 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project3_appforbooks/features/auth/controller/logreg_provider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:project3_appforbooks/features/main/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 import 'login_screen.dart';
 
@@ -16,8 +13,7 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  bool enableBtn = false;
-  final formJKey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
 
   final TextEditingController _firstNameCtrl = TextEditingController();
   final TextEditingController _lastNameCtrl = TextEditingController();
@@ -25,21 +21,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _passwordCtrl = TextEditingController();
   final TextEditingController _confirmPasswordCtrl = TextEditingController();
 
-  Map<String, bool> favorites = {};
-
   bool isEnabled = false;
-
-  enabledButton() {
-    setState(() {
-      isEnabled = true;
-    });
-  }
-
-  disabledButton() {
-    setState(() {
-      isEnabled = false;
-    });
-  }
 
   late String passMatcher;
   late String passMatcher2;
@@ -47,33 +29,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   late String lastNameCheck;
   late String emailCheck;
 
-  Future<void> registerFirebase() async {
-    FirebaseAuth fb = FirebaseAuth.instance;
-    fb
-        .createUserWithEmailAndPassword(
-            email: _emailCtrl.text, password: _passwordCtrl.text)
-        .then((value) async {
-      User userLoged = fb.currentUser!; // variable to reduce same code.
-      userLoged
-          .updateDisplayName("${_firstNameCtrl.text} ${_lastNameCtrl.text}");
-      Map<String, dynamic> dbUser = {
-        "userID": userLoged.uid
-      }; // map to with userID.
-      FirebaseFirestore.instance
-          .collection("users")
-          .doc(userLoged.uid)
-          .set(dbUser); // adding userID to users collection on database
-    }).catchError((e) {});
-    Navigator.pushReplacementNamed(context, HomeScreen.routeName);
-  }
-
   @override
   Widget build(BuildContext context) {
-    final authServiceProvider = Provider.of<AuthServiceProvider>(context);
     final snackBarServiceProvider =
         Provider.of<SnackbarServiceProvider>(context);
-    //final buttonProvider = Provider.of<buttonProvider>(context);
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -84,7 +43,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         child: Container(
           margin: const EdgeInsets.only(left: 24, right: 24),
           child: Form(
-            key: formJKey,
+            key: formKey,
             child: Column(children: [
               const SizedBox(
                 height: 64,
@@ -97,13 +56,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 8,
               ),
               TextFormField(
-                onChanged: (value) {
-                  if (value.length < 7) {
-                    disabledButton();
-                  } else {
-                    enabledButton();
-                  }
-                },
                 controller: _firstNameCtrl,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
@@ -120,13 +72,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 8,
               ),
               TextFormField(
-                onChanged: (value) {
-                  if (value.length < 7) {
-                    disabledButton();
-                  } else {
-                    enabledButton();
-                  }
-                },
                 controller: _lastNameCtrl,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
@@ -144,11 +89,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               TextFormField(
                 keyboardType: TextInputType.emailAddress,
-                onChanged: (value) {
-                  if (value.length < 7) {
-                    disabledButton();
+                onChanged: (email) {
+                  AuthServiceProvider().validateEmail(email);
+                  if (AuthServiceProvider().validateEmail(email) ==
+                      "Invalid Email Address") {
+                    setState(() {
+                      isEnabled = false;
+                    });
                   } else {
-                    enabledButton();
+                    setState(() {
+                      isEnabled = true;
+                    });
                   }
                 },
                 controller: _emailCtrl,
@@ -156,6 +107,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     border: OutlineInputBorder(),
                     hintText: 'Enter your Email Adress'),
               ),
+              Padding(
+                  padding: const EdgeInsets.all(0.0),
+                  child: Text(
+                    AuthServiceProvider().validateEmail(_emailCtrl.text),
+                    style: const TextStyle(color: Colors.red),
+                  )),
               const SizedBox(
                 height: 16,
               ),
@@ -169,11 +126,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
               TextFormField(
                 onChanged: (value) {
                   passMatcher = value;
-                  if (value.length < 7) {
-                    disabledButton();
-                  } else {
-                    enabledButton();
-                  }
                 },
                 controller: _passwordCtrl,
                 decoration: const InputDecoration(
@@ -200,10 +152,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 onChanged: (value) {
                   passMatcher2 = value;
                   if (passMatcher != passMatcher2) {
-                    disabledButton();
                     snackBarServiceProvider.registerMatchNot(context);
                   } else if (passMatcher == passMatcher2) {
-                    enabledButton();
                     snackBarServiceProvider.registerMatch(context);
                   } else {
                     null;
@@ -224,7 +174,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       onPressed: isEnabled
                           ? () {
                               if (passMatcher == passMatcher2) {
-                                registerFirebase();
+                                AuthServiceProvider().registerFirebase(
+                                    _firstNameCtrl.text,
+                                    _lastNameCtrl.text,
+                                    context,
+                                    _emailCtrl.text,
+                                    _passwordCtrl.text);
                               } else {
                                 snackBarServiceProvider.registerError1(context);
                               }
