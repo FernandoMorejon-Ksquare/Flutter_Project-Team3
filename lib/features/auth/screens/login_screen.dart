@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
 import 'package:project3_appforbooks/features/auth/controller/logreg_provider.dart';
-import 'package:project3_appforbooks/features/auth/controller/validation.dart';
 import 'package:project3_appforbooks/features/auth/screens/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {

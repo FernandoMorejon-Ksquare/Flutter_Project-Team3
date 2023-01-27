@@ -143,21 +143,6 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
   }
 }
 
-class GoToFavoritesButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        Navigator.pushNamed(context, FavoriteScreen.routeName);
-      },
-      child: const Text("Go to Favorites"),
-    );
-  }
-}
-
-
-
-
 
 
 

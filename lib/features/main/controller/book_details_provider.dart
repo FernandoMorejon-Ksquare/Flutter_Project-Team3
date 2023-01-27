@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:project3_appforbooks/features/main/controller/alert_manager.dart';
+import 'package:project3_appforbooks/features/books/controller/alert_manager.dart';
+import 'package:project3_appforbooks/features/books/screens/favorites_screen.dart';
 
 class AddFavoritesButton extends StatefulWidget {
   final dynamic favoritesList;
@@ -46,5 +47,17 @@ class _AddFavoritesButtonState extends State<AddFavoritesButton> {
               .doc(widget.fb.currentUser?.uid)
               .set(widget.favoriteLink); // add favorite link to database.
         });
+  }
+}
+
+class GoToFavoritesButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        Navigator.pushNamed(context, FavoriteScreen.routeName);
+      },
+      child: const Text("Go to Favorites"),
+    );
   }
 }
