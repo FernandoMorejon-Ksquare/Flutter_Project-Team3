@@ -7,7 +7,7 @@ import 'package:project3_appforbooks/features/main/screens/home_screen.dart';
 import 'package:project3_appforbooks/routes.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'features/main/models/book_provider.dart';
+import 'features/main/controller/book_provider.dart';
 import 'firebase_options.dart';
 
 void main() async {
