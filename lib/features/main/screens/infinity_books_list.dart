@@ -44,11 +44,7 @@ class _InfinityBooksListState extends State<InfinityBooksList> {
       builder: (context, value, child) {
         if (value.books.isEmpty) {
           // While books are being uploaded ,the screen will show Fetching books.
-          return const Center(
-              child: Text(
-            "Fetching books",
-            style: TextStyle(fontSize: 24.0),
-          ));
+          return const Center(child: CircularProgressIndicator());
         }
         return ListView.builder(
             controller: _lazyController,
