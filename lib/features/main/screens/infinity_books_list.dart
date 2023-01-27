@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../books/screens/book_screen.dart';
-import '../models/book_provider.dart';
+import '../controller/book_provider.dart';
 
 class InfinityBooksList extends StatefulWidget {
   final String search;
@@ -43,7 +43,6 @@ class _InfinityBooksListState extends State<InfinityBooksList> {
     return SafeArea(child: Consumer<BookProvider>(
       builder: (context, value, child) {
         if (value.books.isEmpty) {
-          // While books are being uploaded ,the screen will show Fetching books.
           return const Center(child: CircularProgressIndicator());
         }
         return ListView.builder(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:project3_appforbooks/features/main/controller/search_manager.dart';
-import 'package:project3_appforbooks/features/main/models/title_model.dart';
 import 'package:project3_appforbooks/features/main/screens/infinity_books_list.dart';
 import 'package:project3_appforbooks/features/user/profile_screen.dart';
 
@@ -22,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: TitleModel().titleModel(context, search),
+          title: const Text("Books"),
           leading: IconButton(
             onPressed: () {
               showSearch(context: context, delegate: SearchManager());

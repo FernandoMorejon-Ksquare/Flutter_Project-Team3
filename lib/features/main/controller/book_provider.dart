@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:project3_appforbooks/features/main/controller/book_services.dart';
-import 'book_model.dart';
+import '../models/book_model.dart';
 
 class BookProvider extends ChangeNotifier {
   BookProvider(

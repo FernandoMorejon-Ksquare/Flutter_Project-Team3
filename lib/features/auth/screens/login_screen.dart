@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:project3_appforbooks/features/auth/controller/logreg_provider.dart';
-import 'package:project3_appforbooks/features/auth/controller/validation.dart';
 import 'package:project3_appforbooks/features/auth/screens/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -95,7 +94,6 @@ class LoginScreenState extends State<LoginScreen> {
                 Container(
                   margin: const EdgeInsets.only(right: 32, left: 32),
                   child: TextFormField(
-                    validator: passwordValidator,
                     controller: _passwordCtrl,
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
