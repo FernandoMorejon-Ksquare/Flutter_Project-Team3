@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project3_appforbooks/features/main/screens/home_screen.dart';
@@ -6,18 +8,56 @@ class AuthServiceProvider extends ChangeNotifier {
   final TextEditingController _emailCtrl = TextEditingController();
   final TextEditingController _passwordCtrl = TextEditingController();
 
-  registerFirebase(context) async {
+  String validateEmail(String email) {
+    String emailMessage = "";
+    if (email.isEmpty) {
+      emailMessage = "";
+    } else if (!EmailValidator.validate(email, true, true)) {
+      emailMessage = "Invalid Email Address";
+    } else {
+      emailMessage = "";
+    }
+    notifyListeners();
+    return emailMessage;
+  }
+
+  Future<void> loginFirebase(context, String email, String password) async {
     FirebaseAuth.instance
-        .createUserWithEmailAndPassword(
-            email: _emailCtrl.text, password: _passwordCtrl.text)
+        .signInWithEmailAndPassword(email: email, password: password)
         .then((value) {
       Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+      return "OK";
     }).catchError((e) {
-      String err = e.message;
-      if (e.message == "Given String is empty or null") {}
-      // ignore: invalid_return_type_for_catch_error
-      return err;
+      String message = e.message;
+      var snackBar = SnackBar(
+          duration: const Duration(seconds: 3),
+          content: Text(
+            message,
+            style: const TextStyle(
+              color: Colors.red,
+            ),
+          ));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+      return message;
     });
+  }
+
+  Future<void> registerFirebase(String firstName, String lastName,
+      BuildContext context, String email, String password) async {
+    FirebaseAuth fb = FirebaseAuth.instance;
+    fb
+        .createUserWithEmailAndPassword(email: email, password: password)
+        .then((value) async {
+      User userLoged = fb.currentUser!;
+      userLoged.updateDisplayName("$firstName $lastName");
+      Map<String, dynamic> dbUser = {"userID": userLoged.uid};
+      FirebaseFirestore.instance
+          .collection("users")
+          .doc(userLoged.uid)
+          .set(dbUser);
+    }).catchError((e) {});
+    Navigator.pushReplacementNamed(context, HomeScreen.routeName);
   }
 }
 
