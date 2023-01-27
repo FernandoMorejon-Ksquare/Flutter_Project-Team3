@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -42,18 +43,21 @@ class AuthServiceProvider extends ChangeNotifier {
     });
   }
 
-  registerFirebase(context) async {
-    FirebaseAuth.instance
-        .createUserWithEmailAndPassword(
-            email: _emailCtrl.text, password: _passwordCtrl.text)
-        .then((value) {
-      Navigator.pushReplacementNamed(context, HomeScreen.routeName);
-    }).catchError((e) {
-      String err = e.message;
-      if (e.message == "Given String is empty or null") {}
-      // ignore: invalid_return_type_for_catch_error
-      return err;
-    });
+  Future<void> registerFirebase(String firstName, String lastName,
+      BuildContext context, String email, String password) async {
+    FirebaseAuth fb = FirebaseAuth.instance;
+    fb
+        .createUserWithEmailAndPassword(email: email, password: password)
+        .then((value) async {
+      User userLoged = fb.currentUser!;
+      userLoged.updateDisplayName("$firstName $lastName");
+      Map<String, dynamic> dbUser = {"userID": userLoged.uid};
+      FirebaseFirestore.instance
+          .collection("users")
+          .doc(userLoged.uid)
+          .set(dbUser);
+    }).catchError((e) {});
+    Navigator.pushReplacementNamed(context, HomeScreen.routeName);
   }
 }
 
