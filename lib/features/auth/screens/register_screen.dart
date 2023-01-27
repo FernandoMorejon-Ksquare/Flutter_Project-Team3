@@ -23,8 +23,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   bool isEnabled = false;
 
-  late String passMatcher;
-  late String passMatcher2;
+  late String passMatcher = "";
+  late String passMatcher2 = "";
   late String firstNameCheck;
   late String lastNameCheck;
   late String emailCheck;
@@ -174,7 +174,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             )),
                       onPressed: isEnabled
                           ? () {
-                              if (passMatcher == passMatcher2) {
+                              if (passMatcher == passMatcher2 &&
+                                  passMatcher2.isNotEmpty) {
                                 AuthServiceProvider().registerFirebase(
                                     _firstNameCtrl.text,
                                     _lastNameCtrl.text,
