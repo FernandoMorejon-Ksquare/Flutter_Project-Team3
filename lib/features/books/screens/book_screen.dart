@@ -129,8 +129,8 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
               child: isEnabled
                   ? ElevatedButton(
                       onPressed: () {
-                        AlertManager().displaySnackBar(
-                            context, "Book already in favorites");
+                        // AlertManager().displaySnackBar(
+                        //     context, "Book already in favorites");
                         Navigator.pushNamed(context, FavoriteScreen.routeName);
                       },
                       child: const Text(
