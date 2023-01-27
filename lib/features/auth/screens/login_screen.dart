@@ -34,15 +34,7 @@ class LoginScreenState extends State<LoginScreen> {
             email: _emailCtrl.text, password: _passwordCtrl.text)
         .then((value) {
       Navigator.pushReplacementNamed(context, HomeScreen.routeName);
-      SnackBar snackBar = const SnackBar(
-          duration: Duration(seconds: 2),
-          content: Text(
-            "Loading...",
-            style: TextStyle(
-              color: Colors.green,
-            ),
-          ));
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
       return "OK";
     }).catchError((e) {
       String message = e.message;
