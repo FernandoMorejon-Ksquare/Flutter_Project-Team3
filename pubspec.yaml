@@ -18,7 +18,6 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_launcher_icons: ^0.11.0
-  form_field_validator: ^1.1.0
   http: ^0.13.5
   provider: ^6.0.5
   

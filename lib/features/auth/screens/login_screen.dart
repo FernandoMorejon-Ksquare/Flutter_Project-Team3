@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:form_field_validator/form_field_validator.dart';
 import 'package:project3_appforbooks/features/auth/controller/logreg_provider.dart';
 import 'package:project3_appforbooks/features/auth/screens/register_screen.dart';
 
@@ -53,8 +52,6 @@ class LoginScreenState extends State<LoginScreen> {
                 Container(
                   margin: const EdgeInsets.only(right: 32, left: 32),
                   child: TextFormField(
-                    validator:
-                        EmailValidator(errorText: 'Enter a valid Email Adress'),
                     controller: _emailCtrl,
                     onChanged: (email) {
                       AuthServiceProvider().validateEmail(email);
@@ -127,10 +124,12 @@ class LoginScreenState extends State<LoginScreen> {
                     width: double.infinity,
                     margin: const EdgeInsets.only(left: 32, right: 32, top: 16),
                     child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushNamed(
-                              context, RegisterScreen.routeName);
-                        },
+                        onPressed: isEnabled
+                            ? () {
+                                Navigator.pushNamed(
+                                    context, RegisterScreen.routeName);
+                              }
+                            : null,
                         child: const Text("Sign Up"))),
               ])),
         ))));
