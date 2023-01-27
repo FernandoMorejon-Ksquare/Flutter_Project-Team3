@@ -15,17 +15,6 @@ class BookDetailsScreen extends StatefulWidget {
 
 class _BookDetailsScreenState extends State<BookDetailsScreen> {
   bool isEnabled = false;
-  enabledButton() {
-    setState(() {
-      isEnabled = true;
-    });
-  }
-
-  disabledButton() {
-    setState(() {
-      isEnabled = false;
-    });
-  }
 
 // This will be used when the function fetchFavorites get refactored.
   // CollectionReference<Map<dynamic, dynamic>> db = FirebaseFirestore.instance
@@ -51,13 +40,14 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
     });
   }
 
-  // fetchFavoriteList(); // read current favorites
+  //  // read current favorites
 
   @override
   Widget build(BuildContext context) {
+    fetchFavoriteList();
     final args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    isEnabled = favoritesList.isEmpty;
+    isEnabled = favoritesList.isNotEmpty;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Book Details Screen"),
@@ -143,45 +133,3 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
   }
 }
 
-
-
-
-// ElevatedButton(
-//                         style: ElevatedButton.styleFrom(
-//                             // style of the button changes if the book is on the favorite list.
-//                             backgroundColor:
-//                                 favoritesList.contains(args["selfLink"])
-//                                     ? Colors.grey
-//                                     : Colors.black),
-//                         onPressed: isEnabled
-//                             ? () {
-//                                 if (favoritesList.contains(args["selfLink"])) {
-//                                   // if book is on favorites list:
-//                                   AlertManager().displaySnackBar(
-//                                       // show snackbar with book already in favorites.
-//                                       context,
-//                                       "Book already in favorites");
-//                                 } else {
-//                                   // else add link to favorite list.
-//                                   favoritesList.add(args["selfLink"]);
-//                                   AlertManager().displaySnackBar(
-//                                       context, "Book added to favorites");
-//                                 }
-//                                 // refresh the widget with the set state.
-//                                 setState(() {
-//                                   favoriteLink["favoritesList"] =
-//                                       favoritesList; // add favorite list to the map that will allow to upload it to the database.
-//                                   fetchFavoriteList();
-//                                 });
-//                                 db.collection("users").doc(fb.currentUser?.uid).set(
-//                                     favoriteLink); // add favorite link to database.
-//                               }
-//                             : null,
-//                         child: Text(
-//                           favoritesList.contains(args[
-//                                   "selfLink"]) // Message changes if the book is in favorites.
-//                               ? "Already in favorites"
-//                               : "Add to favorites",
-//                           style: const TextStyle(fontSize: 24.0),
-//                         ))
-//                     : null

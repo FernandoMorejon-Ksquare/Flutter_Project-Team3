@@ -29,10 +29,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
   late String lastNameCheck;
   late String emailCheck;
 
+
   @override
   Widget build(BuildContext context) {
     final snackBarServiceProvider =
         Provider.of<SnackbarServiceProvider>(context);
+
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -152,9 +155,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 onChanged: (value) {
                   passMatcher2 = value;
                   if (passMatcher != passMatcher2) {
+
                     snackBarServiceProvider.registerMatchNot(context);
                   } else if (passMatcher == passMatcher2) {
                     snackBarServiceProvider.registerMatch(context);
+
                   } else {
                     null;
                   }
@@ -181,7 +186,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     _emailCtrl.text,
                                     _passwordCtrl.text);
                               } else {
-                                snackBarServiceProvider.registerError1(context);
+                                snackbarServiceProvider.registerError1(context);
                               }
                             }
                           : null,
